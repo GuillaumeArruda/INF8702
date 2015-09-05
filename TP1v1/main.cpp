@@ -190,7 +190,12 @@ float vertexPositions[] = {
 					// Compléter ici pour l'utilisation du VBO avec l'IBO.........
 					//
 					glEnableClientState(GL_VERTEX_ARRAY);
-					glBindBuffer(GL_VERTEX_ARRAY,0);
+					glEnableClientState(GL_INDEX_ARRAY);
+					glBindBuffer(GL_VERTEX_ARRAY,vertexBufferObject);
+					glBindBuffer(GL_INDEX_ARRAY, indexBufferObject);
+					glVertexPointer(3, GL_FLOAT, 0, NULL);
+					glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, NULL);
+					glDisableClientState(GL_INDEX_ARRAY);
 					glDisableClientState(GL_VERTEX_ARRAY);
 				}
 			}
@@ -734,8 +739,13 @@ float vertexPositions[] = {
 		void initialiserVBO()
 		{
 			// définition du VBO et de l'IBO à utiliser
-			// À compléter..............
+			glGenBuffers(1, &vertexBufferObject);
+			glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 8 * 3, vertexPositions, GL_STATIC_DRAW);
 
+			glGenBuffers(1, &indexBufferObject);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 8 * 3, cubeFaces, GL_STATIC_DRAW);
 		}
 
 		void initialiserNuanceurs() 

@@ -190,12 +190,10 @@ float vertexPositions[] = {
 					// Compléter ici pour l'utilisation du VBO avec l'IBO.........
 					//
 					glEnableClientState(GL_VERTEX_ARRAY);
-					glEnableClientState(GL_INDEX_ARRAY);
 					glBindBuffer(GL_VERTEX_ARRAY,vertexBufferObject);
 					glBindBuffer(GL_INDEX_ARRAY, indexBufferObject);
 					glVertexPointer(3, GL_FLOAT, 0, NULL);
 					glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, NULL);
-					glDisableClientState(GL_INDEX_ARRAY);
 					glDisableClientState(GL_VERTEX_ARRAY);
 				}
 			}
@@ -756,27 +754,52 @@ float vertexPositions[] = {
 
 			// L'objet-programme du nuanceur, lui, est déjà défini globalement...
 			/* GLuint fixedPipelineShaderProg; */
+			nuanceurSommets = glCreateShader(GL_VERTEX_SHADER);
+			nuanceurFragments = glCreateShader(GL_FRAGMENT_SHADER);
+
 
 			// déclaration des chaînes qui devront recevoir le code des nuanceurs
-			char *ns = NULL;
-			char *nf = NULL;
+			const GLchar *ns = NULL;
+			const GLchar *nf = NULL;
 
 			// compléter la compilation des nuanceurs
-			// ...
-			// ...
-
+			ns = textFileRead("nuanceurs\\nuanceurSommets.glsl");
+			nf = textFileRead("nuanceurs\\nuanceurFragments.glsl");
+			GLint sizeNS = 0;
+			GLint sizeNF = 0;
+			while (ns[sizeNS] != '\0')
+			{
+				++sizeNS;
+			}
+			while (nf[sizeNF] != '\0')
+			{
+				++sizeNF;
+			}
+			glShaderSource(nuanceurSommets, 1, &ns, &sizeNS);
+			glShaderSource(nuanceurFragments, 1, &nf, &sizeNF);
+			glCompileShader(nuanceurSommets);
+			glCompileShader(nuanceurFragments);
 			// À DÉCOMMENTER
 			// Afficher les erreurs de compilation !!
-			// afficherShaderInfoLog(nuanceurSommets, "ERREURS DE COMPILATION DU NUANCEUR DE SOMMETS : ");
-			// afficherShaderInfoLog(nuanceurFragments, "ERREURS DE COMPILATION DU NUANCEUR DE FRAGMENTS : ");
+			afficherShaderInfoLog(nuanceurSommets, "ERREURS DE COMPILATION DU NUANCEUR DE SOMMETS : ");
+			afficherShaderInfoLog(nuanceurFragments, "ERREURS DE COMPILATION DU NUANCEUR DE FRAGMENTS : ");
 
 			// créer le programme des nuanceurs et lier
-			// ...
-			// ...
-
+			fixedPipelineShaderProg =  glCreateProgram();
+			glAttachShader(fixedPipelineShaderProg, nuanceurSommets);
+			glAttachShader(fixedPipelineShaderProg, nuanceurFragments);
+			glLinkProgram(fixedPipelineShaderProg);
 			// À DÉCOMMENTER
 			// afficher les erreurs de compilation et de linkage du programme
-			// afficherProgramInfoLog(fixedPipelineShaderProg, "ERREURS DE L'EDITION DES LIENS : ");    
+			afficherProgramInfoLog(fixedPipelineShaderProg, "ERREURS DE L'EDITION DES LIENS : ");
+
+
+			glDetachShader(fixedPipelineShaderProg, nuanceurSommets);
+			glDetachShader(fixedPipelineShaderProg, nuanceurFragments);
+			glDeleteShader(nuanceurSommets);
+			glDeleteShader(nuanceurFragments);
+
+
 
 			glUseProgram( fixedPipelineShaderProg );
 		}

@@ -1,6 +1,5 @@
-
+#version 150
 void main (void)
 {
-   // vous devez compléter le nuanceur de sommets...
-   // ...
+   gl_Position = ftransform();
 }

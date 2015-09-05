@@ -1,0 +1,6 @@
+
+void main (void) 
+{
+   // vous devez compléter le nuanceur de fragments...
+   // ...
+}

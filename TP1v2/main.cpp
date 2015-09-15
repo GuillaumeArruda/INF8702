@@ -177,11 +177,12 @@ void initialisation (void) {
    // amélioration de la perspective
    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
+  
    glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE );
    glLightModeli( GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE );     // two-side mode in openGL
    glEnable( GL_VERTEX_PROGRAM_TWO_SIDE );                // two-side mode in GLSL
    // ajouter ici le mode de calcul séparé de la couleur spéculaire
-   // ... 
+   glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
 
    // charger les textures
    chargerTextures();
@@ -200,11 +201,12 @@ void dessinerScene()
    // vous devez ici l'améliorer... pour que les paramètres
    // GL_FOG_START et GL_FOG_END soient ajustés automatiquement
    // en fonction du zoom.
+
 	glFogi (GL_FOG_MODE,    GL_LINEAR);
-	glFogf (GL_FOG_START,   30.0);
-	glFogf (GL_FOG_END,     40.0);
+	glFogf (GL_FOG_START,   rho - 6);
+	glFogf (GL_FOG_END,     rho + 4);
 	glFogfv(GL_FOG_COLOR,   fogColor);
-	glFogf (GL_FOG_DENSITY, 1.0);
+	glFogf (GL_FOG_DENSITY, 0.0);
 
    if (SHADER_ON)
       glUseProgram(fixedPipelineShaderProg);
@@ -866,19 +868,35 @@ void initialiserNuanceurs()
 //////////////////////////////////////////////////////////
 void appliquerTextures()
 {
-   // ETAGE 0 (texture de mur)
-   // ...
-   // ...
-  
-    
-   // ETAGE 1 (texture de rust)
-   // ...
-   // ...
-
-
-   // ETAGE 2 (texture "paint job")
-   // ...
-   // ...
+	// ETAGE 0 (texture de mur)
+	glActiveTexture(GL_TEXTURE0);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture0);
+	glUniform1i(glGetUniformLocation(fixedPipelineShaderProg, "texUnit0"), 0);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	
+	// ETAGE 1 (texture de rust)
+	float white[] = { 1.0, 1.0, 1.0, 1.0 };
+	glActiveTexture(GL_TEXTURE1);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+	glUniform1i(glGetUniformLocation(fixedPipelineShaderProg, "texUnit1"), 1);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
+	glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, white);
+	glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_MODULATE);
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB, GL_PREVIOUS);
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB, GL_TEXTURE);
+	glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE2_RGB, GL_CONSTANT);
+	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
+	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
+	glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND2_RGB, GL_SRC_COLOR);
+	glTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE , 2.0);
+	// ETAGE 2 (texture "paint job")
+	glActiveTexture(GL_TEXTURE2);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	glUniform1i(glGetUniformLocation(fixedPipelineShaderProg, "texUnit2"), 2);
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);   //Modulate RGB with RGB*/
 }
 
 

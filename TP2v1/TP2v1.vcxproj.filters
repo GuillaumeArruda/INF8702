@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Utilitaires">
+      <UniqueIdentifier>{5b39c164-2c13-4eee-a5b6-5f64b05a7c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Utilitaires">
+      <UniqueIdentifier>{3b358292-4819-48c6-a156-6366c455f5ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Nuanceurs">
+      <UniqueIdentifier>{72120e13-c7bd-49a8-8974-391d1b43c254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nuanceurs\Fragments">
+      <UniqueIdentifier>{bb1f7f2e-c6b9-4450-aa9f-8ae9de75b38a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nuanceurs\Sommets">
+      <UniqueIdentifier>{b6421b8d-5039-4dde-808d-8b994afc17cb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Carte.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cst.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lumiere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Materiau.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modele3DAbstrait.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NuanceurProg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureAbstraite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Var.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="noise.cpp">
+      <Filter>Source Files\Utilitaires</Filter>
+    </ClCompile>
+    <ClCompile Include="textfile.cpp">
+      <Filter>Source Files\Utilitaires</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Carte.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lumiere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Materiau.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modele3DAbstrait.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NuanceurProg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureAbstraite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Var.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="noise.h">
+      <Filter>Header Files\Utilitaires</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files\Utilitaires</Filter>
+    </ClInclude>
+    <ClInclude Include="textfile.h">
+      <Filter>Header Files\Utilitaires</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Nuanceurs\cartePolyFragments.glsl">
+      <Filter>Nuanceurs\Fragments</Filter>
+    </None>
+    <None Include="Nuanceurs\cartePolySommets.glsl">
+      <Filter>Nuanceurs\Sommets</Filter>
+    </None>
+  </ItemGroup>
+</Project>

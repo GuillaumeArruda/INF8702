@@ -7,4 +7,6 @@ void main (void)
     // ATTENTION !... un skybox N'EST PAS soumis à l'éclairage OpenGL
     // la texture qui y est appliquée est en mode REPLACE.
     // aucun éclairage ne doit survenir.
+	gl_FragColor = texture(colorMap, gl_TexCoord[0].xyz);
 }
+	

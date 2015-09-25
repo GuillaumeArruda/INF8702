@@ -117,6 +117,8 @@ void CTexture2D::chargerTexture()
             // TODO: 
             // Changer le code pour construire la pyramide de mipmaps
             glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage.tailleX, TextureImage.tailleY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage.data);
+            glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
+            glGenerateMipmap(GL_TEXTURE_2D);
         }
     }
 }

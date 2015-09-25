@@ -228,17 +228,20 @@ void dessinerScene()
     
     // TODO:
     // Nuanceurs multiples ! réaliser correctement l'affichage
-    // ...
+	glUseProgram(0);
+	progNuanceurSkybox.activer();
 
     glPushMatrix(); {
 
         // TODO: 
         // Corriger l'affichage du skybox afin 
         // d'obtenir une perspective correcte peu importe la position de la caméra
-        // ...
+        glDepthMask(GL_FALSE);
+        glTranslatef(CVar::x, CVar::y, CVar::z);
 
         // afficher le graphisme (liste d'affichage)
         skybox->afficher();
+        glDepthMask(GL_TRUE);
     }glPopMatrix();
     ///////////////////////////////////////
 
@@ -248,7 +251,8 @@ void dessinerScene()
 
     // TODO:
     // Nuanceurs multiples ! réaliser correctement l'affichage
-    // ...
+	glUseProgram(0);
+	progNuanceurGazon.activer();
 
     // ajouts d'autres uniforms
     if (lumieres[LumPonctuelle]->estAllumee()) {
@@ -294,6 +298,7 @@ void dessinerScene()
 
     ///////////////////////////////////////
     // DESSINER LA CARTE D'IDENTITÉ.
+	glUseProgram(0);
     progNuanceurCartePoly.activer();
 
     // ajouts d'autres uniforms
@@ -855,11 +860,11 @@ void compilerNuanceurs ()
 {
     // on compiler ici les programmes de nuanceurs qui furent prédéfinis
     progNuanceurCartePoly.compilerEtLier();
-    progNuanceurCartePoly.activer();
     
     // TODO:
     // On doit compiler les autres nuanceurs
-    // ...
+	progNuanceurSkybox.compilerEtLier();
+	progNuanceurGazon.compilerEtLier();
 
     // on enregistre les différents uniforms que requerront les nuanceurs 
     progNuanceurCartePoly.enregistrerUniformInteger("frontColorMap", CCst::texUnit_0);
@@ -875,11 +880,11 @@ void compilerNuanceurs ()
 
     // TODO:
     // Le nuanceur du skybox utilise une variable "colorMap" qu'il faut enregistrer.
-    // ..
+	progNuanceurSkybox.enregistrerUniformInteger("colorMap", CCst::texUnit_0);
 
-    // TODO:
-    // Le nuanceur du gazon utilise une variable "colorMap" qu'il faut enregistrer.
-    // ..
+	// TODO:
+	// Le nuanceur du gazon utilise une variable "colorMap" qu'il faut enregistrer.
+	progNuanceurGazon.enregistrerUniformInteger("colorMap", CCst::texUnit_0);
 }
 
 

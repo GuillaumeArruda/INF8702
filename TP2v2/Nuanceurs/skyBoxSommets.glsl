@@ -1,3 +1,4 @@
+#version 120
 uniform sampler2D colorMap;
 
 void main (void)
@@ -7,5 +8,5 @@ void main (void)
 
    // TODO:
    // passer correctement les coordonnées de texture
-   // .. 
+   gl_TexCoord[0] = gl_Vertex;
 }

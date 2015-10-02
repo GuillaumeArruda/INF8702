@@ -10,7 +10,6 @@ vec4 Ambient;
 vec4 Diffuse;
 
 varying vec3 transformedNormal;
-varying vec3 eyePosition;
 varying vec3 positionVertex;
 
 
@@ -136,8 +135,7 @@ void main (void)
 {
    vec4 color;
 
-   //ecolor = gl_Color;
    color = texture2D(colorMap, gl_TexCoord[0].xy);
-   color *= flight(transformedNormal,eyePosition,positionVertex);
+   color *= flight(transformedNormal,-positionVertex,positionVertex);
    gl_FragColor = color;
 }

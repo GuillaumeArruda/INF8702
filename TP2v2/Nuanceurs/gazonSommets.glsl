@@ -1,7 +1,6 @@
 uniform sampler2D colorMap;
 
 varying vec3 transformedNormal;
-varying vec3 eyePosition;
 varying vec3 positionVertex;
 void ftexgen()
 {
@@ -21,7 +20,6 @@ void main (void)
 {
     gl_Position = ftransform();
     transformedNormal = fnormal();
-	eyePosition = -gl_Position.xyz;
-	positionVertex = gl_ModelViewMatrix * gl_Vertex;
+	positionVertex = (gl_ModelViewMatrix * gl_Vertex).xyz;
     ftexgen();
 }

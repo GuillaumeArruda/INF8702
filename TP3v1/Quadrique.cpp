@@ -1,4 +1,5 @@
 #include "Quadrique.h"
+#include <algorithm>
 
 using namespace Scene;
 
@@ -161,14 +162,83 @@ CIntersection CQuadrique::Intersection( const CRayon& Rayon )
 {
     CIntersection Result;
 
-    // TODO: À COMPLÉTER LORS DU VOLET 1...
+	float a, b, c, d, e, f, g, h, i, j;
+	float A, B, C;
+	float t0, t1, tf;
+	CVecteur3 rd = Rayon.ObtenirDirection();
+	CVecteur3 r0 = Rayon.ObtenirOrigine();
 
-    // La référence pour l'algorithme d'intersection des quadriques est : 
-    // Eric Haines, Paul Heckbert "An Introduction to Rayon Tracing",
-    // Academic Press, Edited by Andrw S. Glassner, pp.68-73 & 288-293
+	a = m_Quadratique[0];
+	e = m_Quadratique[1];
+	h = m_Quadratique[2];
 
-    // S'il y a collision, ajuster les variables suivantes de la structure intersection :
-    // Normale, Surface intersectée et la distance
+	b = m_Mixte[0];
+	c = m_Mixte[1];
+	f = m_Mixte[2];
+
+	d = m_Lineaire[0];
+	g = m_Lineaire[1];
+	i = m_Lineaire[2];
+
+	j = m_Cst;
+
+	A = a * rd.x * rd.x + 2 * b * rd.x * rd.y + 2 * c * rd.x * rd.z +
+		e * rd.y * rd.y + 2 * f * rd.y * rd.z + h * rd.z * rd.z;
+
+	B = 2 * (a * r0.x * rd.x + b * (r0.x * rd.y + rd.x * r0.y) + c * (r0.x * rd.z + rd.x * r0.z) +
+		d * rd.x + e * r0.y * rd.y + f * (r0.y * rd.z + rd.y * r0.z) + g* rd.y +
+		h * r0.z * rd.z + i * rd.z);
+
+	C = a * r0.x * r0.x + 2 * b * r0.x * r0.y + 2 * c * r0.x * r0.z + 2 * d * r0.x +
+		e * r0.y * r0.y + 2 * f * r0.y * r0.z + 2 * g * r0.y +
+		h * r0.z * r0.z + 2 * i * r0.z + j;
+
+	if (A != 0.f)
+	{
+		t0 = (-B + sqrt(B * B - 4 * A * C)) / (2 * A);
+		t1 = (-B - sqrt(B * B - 4 * A * C)) / (2 * A);
+
+		if (t0 > 0)
+		{
+			if(t1 > 0)
+			{
+				tf = min(t0, t1);
+			}
+			else
+			{
+				tf = t0;
+			}
+		}
+		else 
+		{
+			if (t1 > 0)
+			{
+				tf = t1;
+			}
+			else 
+			{
+				// No intersection
+				return Result;
+			}
+		}
+	}
+	else 
+	{
+		tf = -B / C;
+	}
+
+	//CVecteur3 intersection(r0[0] + rd[0] * tf, r0[1] + rd[1] * tf, r0[2] + rd[2] * tf);
+	CVecteur3 intersection(r0 + rd * tf);
+	Result.AjusterDistance(CVecteur3::Norme(intersection - r0));
+
+	CVecteur3 normale;
+	normale.x = 2 * (a * intersection.x + b * intersection.y + c * intersection.z + d);
+	normale.y = 2 * (b * intersection.x + e * intersection.y + f * intersection.z + g);
+	normale.x = 2 * (c * intersection.x + f * intersection.y + h * intersection.z + i);
+
+	Result.AjusterNormale(CVecteur3::ProdScal(normale, rd) > 0 ? normale : -normale);
+
+	Result.AjusterSurface(this);
 
     return Result;
 }

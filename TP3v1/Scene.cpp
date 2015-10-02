@@ -629,29 +629,42 @@ void CScene::LancerRayons( void )
     // TODO: À COMPLÉTER POUR LE VOLET 1...
 
     // POUR chaque position Py de pixel de la grille virtuelle
-    // {
-    //      POUR chaque position Px de pixel de la grille virtuelle
-    //      {
-    //          Ajuster l’origine du rayon au centre de la caméra
-    //          
-    //          Calculer la direction du rayon vers la coordonnée réelle
-    //          du pixel ( Px,Py )
-    //          
-    //          Ajuster l'orientation du rayon ( utiliser la matrice
-    //          Orientation de la camera qui est déjà calculé pour vous ) et le normaliser
-    //
-    //          Initialiser les autres caractéristiques du rayon à :
-    //              - Energie            = 1
-    //              - NbRebonds          = 0
-    //              - IndiceDeRefraction = 1
-    //
-    //          Lancer le rayon pour obtenir la couleur du pixel avec la fonction
-    //          CScene::ObtenirCouleur()
-    //          
-    //          Enregistrer les composantes R, G et B de la couleur du pixel dans la
-    //          structure linéaire m_PixelInfo de taille ResolutionX * ResolutionY * 3
-    //      }
-    //  }
+
+#pragma omp parallel for
+
+	for (int i = 0; i < m_ResHauteur; ++i)
+	{
+    //  POUR chaque position Px de pixel de la grille virtuelle
+		for (int j = 0; j < m_ResLargeur; ++j)
+		{
+			//  Ajuster l’origine du rayon au centre de la caméra
+			CRayon rayon;
+			rayon.AjusterOrigine(m_Camera.Position);
+			//  Calculer la direction du rayon vers la coordonnée réelle
+			//  du pixel ( Px,Py )
+			rayon.AjusterDirection(CVecteur3(j, i, 0) - m_Camera.Position);
+			//  Ajuster l'orientation du rayon ( utiliser la matrice
+			//  Orientation de la camera qui est déjà calculé pour vous ) et le normaliser
+			rayon.AjusterDirection(CVecteur3::Normaliser(rayon.ObtenirDirection() * m_Camera.Orientation));
+
+			//  Initialiser les autres caractéristiques du rayon à :
+			//      - Energie            = 1
+			//      - NbRebonds          = 0
+			//      - IndiceDeRefraction = 1
+			rayon.AjusterEnergie(1.f);
+			rayon.AjusterNbRebonds(0);
+			rayon.AjusterIndiceRefraction(1.f);
+
+			//  Lancer le rayon pour obtenir la couleur du pixel avec la fonction
+			//  CScene::ObtenirCouleur()
+			//  Enregistrer les composantes R, G et B de la couleur du pixel dans la
+			//  structure linéaire m_PixelInfo de taille ResolutionX * ResolutionY * 3
+			CCouleur couleur = ObtenirCouleur(rayon);
+			m_InfoPixel[(i * m_ResLargeur + j) * 3 + 0] = couleur.r;
+			m_InfoPixel[(i * m_ResLargeur + j) * 3 + 1] = couleur.g;
+			m_InfoPixel[(i * m_ResLargeur + j) * 3 + 2] = couleur.b;
+		}
+	}
 
     // Créer une texture openGL
     glGenTextures  ( 1, &m_TextureScene );

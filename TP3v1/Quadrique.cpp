@@ -165,10 +165,10 @@ CIntersection CQuadrique::Intersection( const CRayon& Rayon )
 	float a, b, c, d, e, f, g, h, i, j;
 	float A, B, C;
 	float t0, t1, tf;
-	CVecteur3 rd = Rayon.ObtenirDirection();
-	CVecteur3 r0 = Rayon.ObtenirOrigine();
+	const CVecteur3 rd = Rayon.ObtenirDirection();
+	const CVecteur3 r0 = Rayon.ObtenirOrigine();
 
-	a = m_Quadratique[0];
+	/*a = m_Quadratique[0];
 	e = m_Quadratique[1];
 	h = m_Quadratique[2];
 
@@ -186,59 +186,72 @@ CIntersection CQuadrique::Intersection( const CRayon& Rayon )
 		e * rd.y * rd.y + 2 * f * rd.y * rd.z + h * rd.z * rd.z;
 
 	B = 2 * (a * r0.x * rd.x + b * (r0.x * rd.y + rd.x * r0.y) + c * (r0.x * rd.z + rd.x * r0.z) +
-		d * rd.x + e * r0.y * rd.y + f * (r0.y * rd.z + rd.y * r0.z) + g* rd.y +
+		d * rd.x + e * r0.y * rd.y + f * (r0.y * rd.z + rd.y * r0.z) + g * rd.y +
 		h * r0.z * rd.z + i * rd.z);
 
 	C = a * r0.x * r0.x + 2 * b * r0.x * r0.y + 2 * c * r0.x * r0.z + 2 * d * r0.x +
 		e * r0.y * r0.y + 2 * f * r0.y * r0.z + 2 * g * r0.y +
-		h * r0.z * r0.z + 2 * i * r0.z + j;
+		h * r0.z * r0.z + 2 * i * r0.z + j;*/
 
-	if (A != 0.f)
-	{
-		t0 = (-B + sqrt(B * B - 4 * A * C)) / (2 * A);
-		t1 = (-B - sqrt(B * B - 4 * A * C)) / (2 * A);
+    a = m_Quadratique[0];
+    b = m_Quadratique[1];
+    c = m_Quadratique[2];
 
-		if (t0 > 0)
-		{
-			if(t1 > 0)
-			{
-				tf = min(t0, t1);
-			}
-			else
-			{
-				tf = t0;
-			}
-		}
-		else 
-		{
-			if (t1 > 0)
-			{
-				tf = t1;
-			}
-			else 
-			{
-				// No intersection
-				return Result;
-			}
-		}
-	}
-	else 
-	{
-		tf = -B / C;
-	}
+    d = m_Mixte[0];
+    e = m_Mixte[1];
+    f = m_Mixte[2];
 
-	//CVecteur3 intersection(r0[0] + rd[0] * tf, r0[1] + rd[1] * tf, r0[2] + rd[2] * tf);
-	CVecteur3 intersection(r0 + rd * tf);
-	Result.AjusterDistance(CVecteur3::Norme(intersection - r0));
+    g = m_Lineaire[0];
+    h = m_Lineaire[1];
+    i = m_Lineaire[2];
 
-	CVecteur3 normale;
-	normale.x = 2 * (a * intersection.x + b * intersection.y + c * intersection.z + d);
-	normale.y = 2 * (b * intersection.x + e * intersection.y + f * intersection.z + g);
-	normale.x = 2 * (c * intersection.x + f * intersection.y + h * intersection.z + i);
+    j = m_Cst;
 
-	Result.AjusterNormale(CVecteur3::ProdScal(normale, rd) > 0 ? normale : -normale);
+    A = a * rd.x * rd.x + b * rd.y * rd.y + c * rd.z * rd.z + d * rd.x * rd.y +
+        e * rd.x * rd.z + f * rd.y * rd.z;
 
-	Result.AjusterSurface(this);
+    B = 2 * a * r0.x * rd.x + 2 * b * r0.y * rd.y + 2 * c * r0.z * rd.z + 
+        d * (r0.x * rd.y + r0.y * rd.x) + e * (r0.x * rd.z) + f * (r0.y * rd.z + rd.y * r0.z) +
+        g * rd.x + h * rd.y + i * rd.z;
+
+    C = a * r0.x * r0.x + b * r0.y * r0.y + c * r0.z * r0.z + d * r0.x * r0.y +
+        e * r0.x * r0.z + f * r0.y * r0.z + g * r0.x + h * r0.y + i * r0.z + j;
+
+    if (A == 0.f)
+    {
+        tf = -C / B;
+    }
+    else
+    {
+        float discriminant = B * B - 4 * A * C;
+        if (discriminant < 0)
+        {
+            return Result;
+        }
+        else
+        {
+            tf = (-B - sqrt(discriminant)) / (2 * A);
+            if (tf < 0)
+            {
+                tf = (-B + sqrt(discriminant)) / (2 * A);
+                if (tf < 0)
+                    return Result;
+            }
+
+        }
+    }
+
+    CVecteur3 intersection(r0 + rd * tf);
+    Result.AjusterDistance(CVecteur3::Norme(intersection - r0));
+
+    CVecteur3 normale;
+    normale.x =  (2 * a * intersection.x + d * intersection.y + e * intersection.z) + g;
+    normale.y =  (d * intersection.x + 2 * b * intersection.y + f * intersection.z) + h;
+    normale.x =  (e * intersection.x + f * intersection.y + 2 * c * intersection.z) + i;
+    normale = CVecteur3::Normaliser(normale);
+    
+    Result.AjusterNormale(CVecteur3::ProdScal(normale, rd) > 0 ? -normale : normale);
+    Result.AjusterSurface(this);
 
     return Result;
 }

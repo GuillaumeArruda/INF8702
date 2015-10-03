@@ -128,15 +128,13 @@ CIntersection CTriangle::Intersection( const CRayon& Rayon )
 {
     CIntersection Result;
 
-    // TODO: À COMPLÉTER LORS DU VOLET 1...
-
     // Voici deux références pour acomplir le développement :
     // 1) Tomas Akenine-Moller and Eric Haines "Real-Time Rendering 2nd Ed." 2002, p.581
     // 2) Son article: http://www.graphics.cornell.edu/pubs/1997/MT97.pdf
 
     // Notez que la normale du triangle est déjà calculée lors du prétraitement
     // il suffit que de la passer à la structure d'intersection.
-
+    
     return Result;
 }
 

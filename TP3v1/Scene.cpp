@@ -626,36 +626,35 @@ void CScene::LancerRayons( void )
 {
     Initialiser();
 
-    // TODO: À COMPLÉTER POUR LE VOLET 1...
+    const float aspectRatio = (float)m_ResLargeur / (float)m_ResHauteur;
+    const CVecteur3 towards = CVecteur3::Normaliser(m_Camera.PointVise - m_Camera.Position);
+    const CVecteur3 right = CVecteur3::ProdVect(towards, m_Camera.Up);
+
+    const CVecteur3 PLargeurMin = m_Camera.Position + m_Camera.Focale * towards - m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle * aspectRatio)) * right;
+    const CVecteur3 PLargeurMax = m_Camera.Position + m_Camera.Focale * towards + m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle * aspectRatio)) * right;
+    const CVecteur3 PHauteurMin = m_Camera.Position + m_Camera.Focale * towards - m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle)) * m_Camera.Up;
+    const CVecteur3 PHauterMax = m_Camera.Position + m_Camera.Focale * towards + m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle)) * m_Camera.Up;
 
     // POUR chaque position Py de pixel de la grille virtuelle
-
     #pragma omp parallel for
 	for (int i = 0; i < m_ResHauteur; ++i)
 	{
-    //  POUR chaque position Px de pixel de la grille virtuelle
+        CVecteur3 Py = PHauteurMin + ((float)i/(float)m_ResHauteur) * (PHauterMax - PHauteurMin);
+        //  POUR chaque position Px de pixel de la grille virtuelle
 		for (int j = 0; j < m_ResLargeur; ++j)
 		{
 			//  Ajuster l’origine du rayon au centre de la caméra
 			CRayon rayon;
 			rayon.AjusterOrigine(m_Camera.Position);
-           
-            CVecteur3 towards = m_Camera.PointVise - m_Camera.Position;
-            CVecteur3 right = CVecteur3::ProdVect(towards, m_Camera.Up);
+            
 
-            CVecteur3 P1 = m_Camera.Position + m_Camera.Focale*towards - m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle)) * right;
-            CVecteur3 P2 = m_Camera.Position + m_Camera.Focale*towards + m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle)) * right;
-            CVecteur3 P = P1 + ((i + 0.5) / m_ResLargeur) * (P2 - P1);
-
-            CVecteur3 V = (P - m_Camera.Position) / CVecteur3::Norme(P - m_Camera.Position);
-			
             //  Calculer la direction du rayon vers la coordonnée réelle
 			//  du pixel ( Px,Py )
-			rayon.AjusterDirection(CVecteur3(j, i, 0) - m_Camera.Position);
+            CVecteur3 Px = PLargeurMin + ((float)j / (float)m_ResLargeur) * (PLargeurMax - PLargeurMin);
+            CVecteur3 V = CVecteur3::Normaliser(Px + Py - 2 * m_Camera.Position);
             rayon.AjusterDirection(V);
 			//  Ajuster l'orientation du rayon ( utiliser la matrice
 			//  Orientation de la camera qui est déjà calculé pour vous ) et le normaliser
-			rayon.AjusterDirection(CVecteur3::Normaliser(rayon.ObtenirDirection() * m_Camera.Orientation));
 
 			//  Initialiser les autres caractéristiques du rayon à :
 			//      - Energie            = 1

@@ -174,8 +174,6 @@ CIntersection CTriangle::Intersection( const CRayon& Rayon )
 	t = CVecteur3::ProdScal(edge2, qvec);
 
 	t *= inv_det;
-	u *= inv_det;
-	v *= inv_det;
 
 	Result.AjusterDistance(t);
 	Result.AjusterNormale(m_Normale);

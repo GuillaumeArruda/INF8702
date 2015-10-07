@@ -631,10 +631,9 @@ void CScene::LancerRayons( void )
     const CVecteur3 right = CVecteur3::Normaliser(CVecteur3::ProdVect(towards, m_Camera.Up));
 
 	const REAL distanceToViewPlane = m_Camera.Focale;
-	//const REAL distanceToViewPlane = 1.0;
 
-    const CVecteur3 PLargeurMin = m_Camera.Position + distanceToViewPlane * (towards - tan(Deg2Rad(m_Camera.Angle * aspectRatio)) * right);
-    const CVecteur3 PLargeurMax = m_Camera.Position + distanceToViewPlane * (towards + tan(Deg2Rad(m_Camera.Angle * aspectRatio)) * right);
+    const CVecteur3 PLargeurMin = m_Camera.Position + distanceToViewPlane * (towards - tan(Deg2Rad(m_Camera.Angle)) * aspectRatio * right);
+    const CVecteur3 PLargeurMax = m_Camera.Position + distanceToViewPlane * (towards + tan(Deg2Rad(m_Camera.Angle)) * aspectRatio * right);
     const CVecteur3 PHauteurMin = m_Camera.Position + distanceToViewPlane * (towards - tan(Deg2Rad(m_Camera.Angle)) * m_Camera.Up);
     const CVecteur3 PHauterMax = m_Camera.Position + distanceToViewPlane * (towards + tan(Deg2Rad(m_Camera.Angle)) * m_Camera.Up);
 

@@ -1,4 +1,5 @@
 #include "Triangle.h"
+#include "Vecteur3.h"
 
 using namespace Scene;
 
@@ -128,14 +129,66 @@ CIntersection CTriangle::Intersection( const CRayon& Rayon )
 {
     CIntersection Result;
 
+	CVecteur3 edge1;
+	CVecteur3 edge2;
+	CVecteur3 tvec;
+	CVecteur3 pvec;
+	CVecteur3 qvec;
+	CVecteur3 dir = Rayon.ObtenirDirection();
+
+	REAL det;
+	REAL inv_det;
+
+	REAL t;
+	REAL u;
+	REAL v;
+	
+	edge1 = m_Pts[1] - m_Pts[0];
+	edge2 = m_Pts[2] - m_Pts[0];
+
+	pvec = CVecteur3::ProdVect(dir, edge2);
+	det = CVecteur3::ProdScal(edge1, pvec);
+
+	if (det < 0.0)
+	{
+		return Result;
+	}
+
+	tvec = Rayon.ObtenirOrigine() - m_Pts[0];
+	u = CVecteur3::ProdScal(tvec, pvec);
+
+	if (u < 0.0 || u > det)
+	{
+		return Result;
+	}
+
+	qvec = CVecteur3::ProdVect(tvec, edge1);
+	v = CVecteur3::ProdScal(dir, qvec);
+
+	if (v < 0.0 || (u + v) > det)
+	{
+		return Result;
+	}
+
+	inv_det = 1.0 / det;
+	t = CVecteur3::ProdScal(edge2, qvec);
+
+	t *= inv_det;
+	u *= inv_det;
+	v *= inv_det;
+
+	Result.AjusterDistance(t);
+	Result.AjusterNormale(m_Normale);
+	Result.AjusterSurface(this);
+
+    return Result;
+
     // Voici deux références pour acomplir le développement :
     // 1) Tomas Akenine-Moller and Eric Haines "Real-Time Rendering 2nd Ed." 2002, p.581
     // 2) Son article: http://www.graphics.cornell.edu/pubs/1997/MT97.pdf
 
     // Notez que la normale du triangle est déjà calculée lors du prétraitement
     // il suffit que de la passer à la structure d'intersection.
-    
-    return Result;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -628,12 +628,15 @@ void CScene::LancerRayons( void )
 
     const float aspectRatio = (float)m_ResLargeur / (float)m_ResHauteur;
     const CVecteur3 towards = CVecteur3::Normaliser(m_Camera.PointVise - m_Camera.Position);
-    const CVecteur3 right = CVecteur3::ProdVect(towards, m_Camera.Up);
+    const CVecteur3 right = CVecteur3::Normaliser(CVecteur3::ProdVect(towards, m_Camera.Up));
 
-    const CVecteur3 PLargeurMin = m_Camera.Position + m_Camera.Focale * towards - m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle * aspectRatio)) * right;
-    const CVecteur3 PLargeurMax = m_Camera.Position + m_Camera.Focale * towards + m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle * aspectRatio)) * right;
-    const CVecteur3 PHauteurMin = m_Camera.Position + m_Camera.Focale * towards - m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle)) * m_Camera.Up;
-    const CVecteur3 PHauterMax = m_Camera.Position + m_Camera.Focale * towards + m_Camera.Focale * tan(Deg2Rad(m_Camera.Angle)) * m_Camera.Up;
+	const REAL distanceToViewPlane = m_Camera.Focale;
+	//const REAL distanceToViewPlane = 1.0;
+
+    const CVecteur3 PLargeurMin = m_Camera.Position + distanceToViewPlane * (towards - tan(Deg2Rad(m_Camera.Angle * aspectRatio)) * right);
+    const CVecteur3 PLargeurMax = m_Camera.Position + distanceToViewPlane * (towards + tan(Deg2Rad(m_Camera.Angle * aspectRatio)) * right);
+    const CVecteur3 PHauteurMin = m_Camera.Position + distanceToViewPlane * (towards - tan(Deg2Rad(m_Camera.Angle)) * m_Camera.Up);
+    const CVecteur3 PHauterMax = m_Camera.Position + distanceToViewPlane * (towards + tan(Deg2Rad(m_Camera.Angle)) * m_Camera.Up);
 
     // POUR chaque position Py de pixel de la grille virtuelle
     #pragma omp parallel for

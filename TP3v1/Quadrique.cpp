@@ -250,14 +250,6 @@ CIntersection CQuadrique::Intersection( const CRayon& Rayon )
     normale.z =  (e * intersection.x + f * intersection.y + 2 * c * intersection.z) + i;
     normale = CVecteur3::Normaliser(normale);
 
-	/*
-    CVecteur3 normale;
-    normale.x =  (2 * a * intersection.x + f * intersection.y + e * intersection.z) + g;
-    normale.y =  (d * intersection.z + 2 * b * intersection.y + f * intersection.x) + h;
-    normale.x =  (e * intersection.x + d * intersection.y + 2 * c * intersection.z) + i;
-    normale = CVecteur3::Normaliser(normale);
-	*/
-    
     Result.AjusterNormale(CVecteur3::ProdScal(normale, rd) > 0 ? -normale : normale);
     Result.AjusterSurface(this);
 

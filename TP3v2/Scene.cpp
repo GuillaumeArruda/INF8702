@@ -734,7 +734,7 @@ const CCouleur CScene::ObtenirCouleurSurIntersection( const CRayon& Rayon, const
         LumiereRayon.AjusterEnergie( 1 );
         LumiereRayon.AjusterIndiceRefraction( 1 );
 
-        if( CVecteur3::ProdScal( LumiereRayon.ObtenirDirection(), Intersection.ObtenirNormale() ) > 0 )
+        if( CVecteur3::ProdScal( LumiereRayon.ObtenirDirection(), Intersection.ObtenirNormale() ) > 0.0 )
         {
             // Obtenir la couleur à partir de la lumière
             CCouleur Filter         = ObtenirFiltreDeSurface( LumiereRayon );
@@ -750,7 +750,7 @@ const CCouleur CScene::ObtenirCouleurSurIntersection( const CRayon& Rayon, const
             CVecteur3 R = CVecteur3::Reflect(-LumiereRayon.ObtenirDirection(), Intersection.ObtenirNormale());
 
             REAL brillance = Intersection.ObtenirSurface()->ObtenirCoeffBrillance() == 0 ? 1.0 : Intersection.ObtenirSurface()->ObtenirCoeffBrillance();
-            REAL specular = std::fmax(std::pow(CVecteur3::ProdScal(R, E), brillance),0.0);
+            REAL specular = std::pow(std::fmax(CVecteur3::ProdScal(R, E),0.0), brillance);
 
             Result += LumiereCouleur * specular * Intersection.ObtenirSurface()->ObtenirCoeffSpeculaire();
         }
@@ -793,7 +793,7 @@ const CCouleur CScene::ObtenirFiltreDeSurface( CRayon& LumiereRayon ) const
         Tmp = (*aSurface)->Intersection(LumiereRayon);
         if (Tmp.ObtenirDistance() > EPSILON)
         {
-            Filter *= Tmp.ObtenirSurface()->ObtenirCoeffRefraction();
+            Filter *= Tmp.ObtenirSurface()->ObtenirCoeffRefraction() * Tmp.ObtenirSurface()->ObtenirCouleur();
         }
     }
 

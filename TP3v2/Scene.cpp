@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include <fstream>
+#include <math.h>
 #include "StringUtils.h"
 #include "Triangle.h"
 #include "Plan.h"
@@ -744,13 +745,15 @@ const CCouleur CScene::ObtenirCouleurSurIntersection( const CRayon& Rayon, const
                 CVecteur3::ProdScal( Intersection.ObtenirNormale(), LumiereRayon.ObtenirDirection() );
             Result += Intersection.ObtenirSurface()->ObtenirCouleur() * GouraudFactor * LumiereCouleur;
 
-            // TODO : À COMPLÉTER POUR LORS DU VOLET 2...
-            // AJOUTER LA CONTRIBUTION SPÉCULAIRE DE PHONG...
+            CVecteur3 E = CVecteur3::Normaliser(-Rayon.ObtenirDirection());
+            CVecteur3 R = CVecteur3::Reflect(-LumiereRayon.ObtenirDirection(), Intersection.ObtenirNormale());
+            REAL specular = std::pow(CVecteur3::ProdScal(R, E), Intersection.ObtenirSurface()->ObtenirCoeffBrillance());
+            if (specular < 0.0)
+                specular = 0.0;
+            Result += LumiereCouleur * specular * Intersection.ObtenirSurface()->ObtenirCoeffSpeculaire();
+            
         }
     }
-
-    // ...
-
     return Result;
 }
 

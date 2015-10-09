@@ -635,10 +635,12 @@ void CScene::LancerRayons( void )
     CCouleur PixelColor;
     int      PixelIdx = 0;
 
+    #pragma omp parallel for private(Rayon, PixelColor, PixelIdx)
     for( int PixY = 0; PixY < m_ResHauteur; PixY++ )
     {
       for( int PixX = 0; PixX < m_ResLargeur; PixX++ )
       {
+
          // Prépare le rayon
          Rayon.AjusterOrigine( m_Camera.Position );
 

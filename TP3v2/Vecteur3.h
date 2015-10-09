@@ -547,9 +547,9 @@ namespace Math3D
     ///////////////////////////////////////////////////////////////////////////////
     inline const CVecteur3 CVecteur3::Reflect( const CVecteur3& Vecteur, const CVecteur3& Normal )
     {
-        // À COMPLÉTER LORS DU VOLET 2...
-        
-        return Vecteur;
+        CVecteur3 reflectedVector;
+        reflectedVector = Vecteur - 2 * CVecteur3::ProdScal(Vecteur, Normal) * Normal;
+        return reflectedVector;
     }
 
     ///////////////////////////////////////////////////////////////////////////////

@@ -84,7 +84,7 @@ int main( int argc, char *argv[] )
 
         // Ajuster la résolution de la scène
         CVar::g_LargeurFenetre = 1024;
-        CVar::g_HauteurFenetre = 512;
+        CVar::g_HauteurFenetre = 1024;
         CVar::g_GestionnaireDeScene->AjusterResolution( CVar::g_LargeurFenetre, CVar::g_HauteurFenetre );
 
         // Traiter le fichier de données de la scène

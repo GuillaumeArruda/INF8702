@@ -547,9 +547,7 @@ namespace Math3D
     ///////////////////////////////////////////////////////////////////////////////
     inline const CVecteur3 CVecteur3::Reflect( const CVecteur3& Vecteur, const CVecteur3& Normal )
     {
-        CVecteur3 reflectedVector;
-        reflectedVector = Vecteur - 2 * CVecteur3::ProdScal(Vecteur, Normal) * Normal;
-        return reflectedVector;
+        return Vecteur - 2 * CVecteur3::ProdScal(Vecteur, Normal) * Normal;
     }
 
     ///////////////////////////////////////////////////////////////////////////////

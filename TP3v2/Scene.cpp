@@ -745,13 +745,14 @@ const CCouleur CScene::ObtenirCouleurSurIntersection( const CRayon& Rayon, const
                 CVecteur3::ProdScal( Intersection.ObtenirNormale(), LumiereRayon.ObtenirDirection() );
             Result += Intersection.ObtenirSurface()->ObtenirCouleur() * GouraudFactor * LumiereCouleur;
 
+            // Calcul speculaire
             CVecteur3 E = CVecteur3::Normaliser(-Rayon.ObtenirDirection());
             CVecteur3 R = CVecteur3::Reflect(-LumiereRayon.ObtenirDirection(), Intersection.ObtenirNormale());
-            REAL specular = std::pow(CVecteur3::ProdScal(R, E), Intersection.ObtenirSurface()->ObtenirCoeffBrillance());
-            if (specular < 0.0)
-                specular = 0.0;
+
+            REAL brillance = Intersection.ObtenirSurface()->ObtenirCoeffBrillance() == 0 ? 1.0 : Intersection.ObtenirSurface()->ObtenirCoeffBrillance();
+            REAL specular = std::fmax(std::pow(CVecteur3::ProdScal(R, E), brillance),0.0);
+
             Result += LumiereCouleur * specular * Intersection.ObtenirSurface()->ObtenirCoeffSpeculaire();
-            
         }
     }
     return Result;
@@ -781,8 +782,20 @@ const CCouleur CScene::ObtenirFiltreDeSurface( CRayon& LumiereRayon ) const
 
     // TODO : À COMPLÉTER LORS DU VOLET 2...
 
+
     // Tester le rayon de lumière avec chaque surface de la scène
     // pour vérifier s'il y a intersection
+    CIntersection Result;
+    CIntersection Tmp;
+
+    for (SurfaceIterator aSurface = m_Surfaces.begin(); aSurface != m_Surfaces.end(); aSurface++)
+    {
+        Tmp = (*aSurface)->Intersection(LumiereRayon);
+        if (Tmp.ObtenirDistance() > EPSILON)
+        {
+            Filter *= Tmp.ObtenirSurface()->ObtenirCoeffRefraction();
+        }
+    }
 
     // S'il y a une intersection appliquer la translucidité de la surface
     // intersectée sur le filtre

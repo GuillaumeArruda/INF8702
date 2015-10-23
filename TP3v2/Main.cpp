@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <GL/glew.h>
 #include <GL/glut.h>
+#include <omp.h>
 
 #include "Cst.h"
 #include "Var.h"
@@ -46,6 +47,8 @@ void Dessiner            ( void );
 
 int main( int argc, char *argv[] )
 {
+	omp_set_num_threads(4);
+	std::cout << "Number of threads: " << omp_get_num_threads() << std::endl;
     // Traiter les arguments d'entrée
     if( argc > 1 )
     {

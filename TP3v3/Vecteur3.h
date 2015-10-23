@@ -3,7 +3,7 @@
 
 #include <assert.h>
 #include "MathUtils.h"
-
+#include <math.h>
 using namespace std;
 
 namespace Math3D
@@ -566,10 +566,26 @@ namespace Math3D
 	inline const CVecteur3 CVecteur3::Refract( const CVecteur3& Vecteur, const CVecteur3& Normal, const REAL IndiceRefractionRatio )
 	{
 		CVecteur3 Result;
-
-	//TODO:Ajuster le vecteur avec calcul d'angle critique
-
-		return Result;
+        REAL nDotv = ProdScal(Normal, Vecteur);
+        if (IndiceRefractionRatio < 1.0)
+        {
+            REAL angleCritique = asin(IndiceRefractionRatio);
+            REAL angleIncident = acos(-nDotv);
+            if (angleIncident > angleCritique)
+            {
+                return CVecteur3::Reflect(Vecteur, Normal);;
+            }
+        }
+        REAL k = RENDRE_REEL(1.0) - IndiceRefractionRatio * IndiceRefractionRatio * (RENDRE_REEL(1.0) - nDotv * nDotv);
+        if (k < 0)
+        {
+            Result = CVecteur3(0.0);
+        }
+        else
+        {
+            Result = IndiceRefractionRatio * Vecteur - (IndiceRefractionRatio * nDotv + sqrt(k)) * Normal;
+        }
+        return Result;
 	}
 }
 

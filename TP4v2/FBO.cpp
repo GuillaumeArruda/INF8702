@@ -105,11 +105,27 @@ void CFBO::Init( int w, int h, int format )
 
    // TODO :
    // Initialiser le FBO et l'objet de rendu RGB
-   // ...
-   // ...
-   // ...
+   glGenFramebuffers(1, &m_FBO);
+   glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
 
+   glGenTextures(1, &m_Texture);
+   glBindTexture(GL_TEXTURE_2D, m_Texture);
+   glTexImage2D(GL_TEXTURE_2D, 0, format, m_TextureW, m_TextureH, 0, format, GL_UNSIGNED_BYTE, 0);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
+   glGenRenderbuffers(1, &m_Profondeur);
+   glBindRenderbuffer(GL_RENDERBUFFER, m_Profondeur);
+   glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, m_TextureW, m_TextureH);
+   glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_Profondeur);
+
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_Texture, 0);
+
+   // Set the list of draw buffers.
+   GLenum DrawBuffers = GL_COLOR_ATTACHMENT0;
+   glDrawBuffers(1, &DrawBuffers);
    // Vérification des erreurs FBO
    // Nous vous fournissons cette vérification d'erreurs
    // pour que vous arriviez plus aisément à déboguer votre code.
@@ -195,8 +211,9 @@ void CFBO::Liberer()
 void CFBO::CommencerCapture()
 {
    // TODO :
-   // active la définition du FBO
-   // ...
+    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, m_TextureW, m_TextureH);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -217,6 +234,5 @@ void CFBO::CommencerCapture()
 void CFBO::TerminerCapture()
 {
    // TODO :
-   // désactive la définition du FBO
-   // ...
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

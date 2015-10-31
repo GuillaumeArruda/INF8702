@@ -50,7 +50,7 @@ CMateriau nurbs_mat_ambiant_model(0.0, 0.0, 0.0, 1.0,  1.0, 1.0, 1.0, 1.0,  0.0,
 
 // les programmes de nuanceurs
 CNuanceurProg progNuanceurOpenGL;
-CNuanceurProg progNuanceurSkybox("Nuanceurs/skyBoxSommets.glsl", "Nuanceurs/skyBoxFragments.glsl", false); 
+CNuanceurProg progNuanceurSkybox("Nuanceurs/skyBoxSommets.glsl", "Nuanceurs/skyBoxFragments.glsl", false);
 CNuanceurProg progNuanceurGazon("Nuanceurs/gazonSommets.glsl", "Nuanceurs/gazonFragments.glsl", false); 
 CNuanceurProg progNuanceurTV("Nuanceurs/TVSommets.glsl", "Nuanceurs/TVFragments.glsl", false); 
 
@@ -232,9 +232,9 @@ void initialisation (void) {
 
    // TODO:
    // création du frame buffer object
-   // Attention à la taille de votre FBO !
-   // ...
-   // ...
+   // Attention à la taille de votre FBO 
+   fbo = new CFBO();
+   fbo->Init(1024, 1024, GL_RGB);
 }
 
 
@@ -479,6 +479,17 @@ void affichage(void)
    // ATTENTION!! - n'oubliez pas d'ajuster glViewport pour chacun
    // des rendus afin de produire votre rendu caméraXL1 en plus
    // petit afin d'accélérer l'affichage !
+    fbo->CommencerCapture();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glRotated(CVar::angleRotX - 90, 1.0, 0.0, 0.0);
+    glRotated(CVar::angleRotY, 0.0, 1.0, 0.0);
+    glRotated(CVar::angleRotZ - 90, 0.0, 0.0, 1.0);
+    dessinerScene(false);
+
+    fbo->TerminerCapture();
+
+    glViewport(0, 0, CVar::currentW, CVar::currentH);
 
    // effacement de l'ecran et du tampon de profondeur
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -486,7 +497,6 @@ void affichage(void)
    // charger matrice de modélisation
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-
    // mettre à jour la caméra openGL
    rafraichirCamera();
 

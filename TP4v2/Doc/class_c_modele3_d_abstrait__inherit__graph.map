@@ -1,0 +1,4 @@
+base referer
+rect $class_c_gazon.html 6,80 75,107
+rect $class_c_skybox.html 99,80 174,107
+rect $class_c_t_v.html 198,80 246,107

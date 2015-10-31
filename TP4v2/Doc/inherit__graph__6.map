@@ -1,0 +1,4 @@
+base referer
+rect $class_c_texture_abstraite.html 5,31 136,57
+rect $class_c_texture2_d.html 205,5 299,32
+rect $class_c_texture_cubemap.html 185,56 319,83

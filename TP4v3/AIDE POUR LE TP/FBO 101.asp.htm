@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>GameDev.net - OpenGL Frame Buffer Object 101</title>
+
+
+
+  
+  <link rel="stylesheet" href="article2331.asp_fichiers/reference.css" type="text/css">
+  <link rel="icon" href="http://www.gamedev.net/pics/gdicon.png" type="image/png">
+<style type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</style></head><body leftmargin="0" topmargin="0" alink="#000000" background="article2331.asp_fichiers/watermark.gif" bgcolor="#ffffff" link="#666699" marginheight="0" marginwidth="0" text="#000000" vlink="#666699"><script type="text/javascript" src="article2331.asp_fichiers/al.htm"></script><script type="text/javascript" src="article2331.asp_fichiers/func_200803201111.js"></script><script type="text/javascript" src="article2331.asp_fichiers/door.js"></script>
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+  <tbody><tr>
+    <td class="tblhdr">OpenGL Frame Buffer Object 101</td>
+    <td class="tblhdr" align="right" nowrap="nowrap"><img src="article2331.asp_fichiers/littleg.gif" align="absbottom" height="16" width="16">&nbsp;<a href="http://www.gamedev.net/"><span style="color: white; text-decoration: none;">GameDev.net</span></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+<!-- Begin -  Site: GameDev.net Zone: GameDev.net variable width -->
+<script language="javascript" type="text/javascript">
+<!--
+var browName = navigator.appName;
+var SiteID = 1;
+var browDateTime = (new Date()).getTime();
+if (browName=='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Get&amp;IFR=False&amp;Browser=NETSCAPE4&amp;PageID=55140&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+if (browName!='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Get&amp;IFR=False&amp;PageID=55140&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+// --> 
+</script><script language="javascript" src="article2331.asp_fichiers/a_002.js"></script><!-- BEGIN RICH-MEDIA NETWORK CODE -->
+<script language="JavaScript">
+rnum=Math.round(Math.random() * 100000);
+
+document.write('<scr'+'ipt src="http://www.burstnet.com/cgi-bin/ads/ad10166a.cgi/v=2.0S/sz=468x60A|728x90A/'+rnum+'/NI/RETURN-CODE/JS/"></scr'+'ipt>');
+
+</script><script src="article2331.asp_fichiers/a.htm"></script><iframe marginwidth="0" marginheight="0" src="article2331.asp_fichiers/st.htm" frameborder="0" height="90" scrolling="no" width="728"></iframe><img src="article2331.asp_fichiers/blank.gif" align="right" height="0" width="0"><script language="JavaScript">var tcdacmd="dt";var ANBCH="573";</script><script src="article2331.asp_fichiers/slf.js" language="JavaScript"></script><noscript><a href="http://www.burstnet.com/ads/ad10166a-map.cgi/ns/v=2.0S/sz=468x60A|728x90A/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/ad10166a.cgi/ns/v=2.0S/sz=468x60A|728x90A/" border="0" alt="Click Here"></a>
+</noscript>
+<!-- END BURST CODE -->
+
+<noscript> <a
+href="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID="
+target="_blank"> <img
+src="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&amp;PageID="
+width="728" height="90" border="0" alt=""></a>
+</noscript>
+<!-- End -  Site: GameDev.net Zone: GameDev.net variable width --></td>
+  </tr>
+</tbody></table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td>
+
+    <p align="center"><span class="title">OpenGL Frame Buffer Object 101</span>
+    
+          <br><span class="author">by Rob 'phantom' Jones</span>
+        </p>
+    <table align="right" border="0" cellpadding="5" cellspacing="0" width="310"><tbody><tr><td align="center"><br><span class="maintext-2">ADVERTISEMENT</span>
+<!-- Begin -  Site: GameDev.net Zone: GameDev.net Box -->
+<script language="javascript" type="text/javascript">
+<!--
+var browName = navigator.appName;
+var SiteID = 1;
+var browDateTime = (new Date()).getTime();
+if (browName=='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Get&amp;IFR=False&amp;Browser=NETSCAPE4&amp;PageID=20483&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+if (browName!='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Get&amp;IFR=False&amp;PageID=20483&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+// --> 
+</script><script language="javascript" src="article2331.asp_fichiers/a.js"></script><script language="JavaScript" type="text/javascript" src="article2331.asp_fichiers/adx.js"></script>
+<script language="JavaScript" type="text/javascript">
+<!--
+   if (!document.phpAds_used) document.phpAds_used = ',';
+   phpAds_random = new String (Math.random()); phpAds_random = phpAds_random.substring(2,11);
+  
+   document.write ("<" + "script language='JavaScript' type='text/javascript' src='");
+   document.write ("http://ads.garagegames.com/adjs.php?n= " + phpAds_random);
+   document.write ("&amp;clientid=9");
+   document.write ("&amp;exclude=" + document.phpAds_used);
+   if (document.referrer)
+      document.write ("&amp;referer=" + escape( document.referrer));
+   document.write ("'><" + "/script>");
+//-->
+</script><script language="JavaScript" type="text/javascript" src="article2331.asp_fichiers/adjs.js"></script><a href="http://ads.garagegames.com/adclick.php?bannerid=98&amp;zoneid=0&amp;source=&amp;dest=http%3A%2F%2Fwww.greatgamesexperiment.com%2FGameDevGGE" target="_blank"><img src="article2331.asp_fichiers/square.gif" alt="" title="" border="0" height="250" width="300"></a><div id="beacon_98" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="article2331.asp_fichiers/adlog.gif" alt="" style="width: 0px; height: 0px;" height="0" width="0"></div><noscript><a
+href='http://ads.garagegames.com/adclick.php?n=ad1492de '
+target='_blank'><img
+src='http://ads.garagegames.com/adview.php?clientid=9&amp;n=ad1492de'
+border='0' alt=''></a></noscript>
+<noscript> <a
+href="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=20483"
+target="_blank"> <img
+src="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&amp;PageID=20483"
+width="300" height="250" border="0" alt=""></a>
+</noscript>
+<!-- End -  Site: GameDev.net Zone: GameDev.net Box -->
+</td></tr></tbody></table>
+  
+<h1>Introduction</h1>
+<p>The Frame Buffer Object (FBO) extension was introduced to make
+Render to Texture objects much more efficient and much easier to
+perform when compared with the copying or pbuffer alternatives.</p>
+<p>In this little article I&#8217;m going to give you a quick over view of
+how to use this extension and some things to keep in mind when using it
+so you can add faster Render to Texture functionality to your OpenGL
+programs.</p>
+<h1>Setting Up</h1>
+<p>As with the other objects in OpenGL (texture object, pixel buffer
+objects and vertex buffer object) before you can use a FBO you have to
+create a valid handle to it:</p>
+<pre class="code">GLuint fbo;
+glGenFramebuffersEXT(1, &amp;fbo);
+</pre>
+<p>To perform any operations on a FBO you need to bind it, much like
+you would a VBO or texture, so that the operations can be performed on
+it, this is done via the following code</p>
+<pre class="code">glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);
+</pre>
+<p>The first parameter is the &#8216;target&#8217; you wish to bind the framebuffer
+to, right now the only target you can use is the one indicated above
+however it is possible future extensions might allow you to bind it
+somewhere else. The <em>fbo</em> variable holds the handle to the FBO
+we requested earlier. To perform any FBO related operations you need to
+have a FBO bound or the calls will fail.</p>
+<h1>Adding a Depth Buffer</h1>
+<p>A FBO on its own isn&#8217;t of much use, for it to be usable you have to
+attach some renderable objects to it; these can be textures or the
+newly introduced <strong>renderbuffers</strong>.</p>
+<p>A <strong>renderbuffer</strong> are just objects which are used to
+support offscreen rendering, often for sections of the framebuffer
+which don&#8217;t have a texture format associated with them such as the
+stencil or depth buffer.</p>
+<p>In this case we are going to use a <strong>renderbuffer</strong> to give our FBO a depth buffer to use while rendering.</p>
+<p>Like the FBO we first of all have to get a handle to a valid <strong>renderbuffer</strong>:</p>
+<pre class="code">GLuint depthbuffer;
+glGenRenderbuffersEXT(1, &amp;depthbuffer);
+</pre>
+<p>Having successfully done this we need to bind the <strong>renderbuffer</strong> so that it is the current <strong>renderbuffer</strong> for the following operations:</p>
+<pre class="code">glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, depthbuffer);
+</pre>
+<p>As with a FBO bind the first parameter is the &#8216;target&#8217; you wish to
+bind to, which right now can only be the indicated target. The <em>depthbuffer</em> variable holds the handle to the <strong>renderbuffer</strong> we&#8217;ll be working with after this.</p>
+<p>At this point the <strong>renderbuffer</strong> doesn&#8217;t have any
+storage space associated with it, so we need to tell OpenGL how we want
+to use it and what size we&#8217;d like. In this case we are asking for a
+depth buffer of a certain size:</p>
+<pre class="code">glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, width, height);
+</pre>
+<p>Upon successful completion of the above code OpenGL will have allocated space for the <strong>renderbuffer</strong> to be used as a depth buffer with a given <em>width</em> and <em>height</em>. Note that <strong>renderbuffers</strong> can be used for normal RGB/RGBA storage and could be used to store stencil information.</p>
+<p>Having reserved the space for the depth buffer the next job is to attach it to the FBO we created earlier.</p>
+<pre class="code">glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, depthbuffer);
+</pre>
+<p>While it might look a bit imposing the function is pretty easy to understand; all it is doing is attaching the <em>depthbuffer</em> we created earlier to the currently bound FBO to its depth buffer attachment point.</p>
+<h1>Adding a Texture To Render To</h1>
+<p>At this point we still don&#8217;t have a way of writing colour
+information to the FBO, so that is what we are going to add now. There
+are two ways of going about it:</p>
+<ol>
+  <li>Attach a colour Renderbuffer to the FBO</li>
+  <li>Attach a texture to the FBO</li>
+</ol>
+<p>The former does have some uses; however it is the latter we will be covering here.</p>
+<p>Before you can attach a texture you need to create one, this hasn&#8217;t changed from the normal way of using textures as you&#8217;ll see:</p>
+<pre class="code">GLuint img;
+glGenTextures(1, &amp;img);
+glBindTexture(GL_TEXTURE_2D, img);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8,  width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+</pre>
+<p>In this instance we are creating a normal RGBA image of the <strong>same width and height</strong> as the <strong>renderbuffer</strong> we created earlier; this is important as <strong>ALL</strong>
+attachments to a FBO have to be the same width and height. Note that we
+don&#8217;t upload any data, the space is just reserved by OpenGL so we can
+use it later.</p>
+<p>Having created our texture the next job is to attach it to the FBO so we can render to it:</p>
+<pre class="code">glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, img, 0);
+</pre>
+<p>Again this might look imposing but it isn&#8217;t that bad, the
+GL_COLOR_ATTACHMENT0_EXT tells OpenGL to attach it to the relevent
+attachment point (FBOs can have more than one colour buffer attached at
+any given time, each one to a different point), the GL_TEXTURE_2D tells
+OpenGL the format of the texture we are going to be attaching, <em>img</em>
+is the texture we&#8217;ll be attaching and the &#8216;0&#8217; refers to the mipmap
+level of the texture you want to attach to, which you will generally
+want to leave as 0.</p>
+<p>The final job to do in setup is to check that the FBO is &#8216;complete&#8217;.
+Completeness refers to the state of the FBO being one which, given the
+current OpenGL state and its attachments, all is correct for you to
+render to it.</p>
+<p>This test is done via a single function which returns the status of the currently bound FBO</p>
+<pre class="code">GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+</pre>
+<p>If all has gone well then status will equal <em>GL_FRAMEBUFFER_COMPLETE_EXT</em>
+and your FBO is ready to be rendered to. Other error codes, as found in
+the spec, indicate other problems which might well have occurred when
+you tried to setup the FBO.</p>
+<h1>Rendering to Texture</h1>
+<p>With all the hard work setting things up done the usage of the FBO
+from here on out is in fact pretty simple and relies on just one
+function call: glBindFramebufferEXT().</p>
+<p>To render to a FBO you bind it and to stop rendering to it you call the above again with &#8216;0&#8217; as the final parameter:</p>
+<pre class="code">glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);
+glPushAttrib(GL_VIEWPORT_BIT);
+glViewport(0,0,width, height);
+
+
+<span class="codecomment">// Render as normal here
+// output goes to the FBO and it&#8217;s attached buffers</span>
+
+glPopAttrib();
+glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+</pre>
+<p>Three lines which probably jumped out at you right away are the
+glPushAttrib/glPopAttrib pair and the glViewport call. The glViewport
+call is needed so that we don&#8217;t try to render into an area bigger than,
+or even smaller than, the FBO is setup for. The glPushAtrrib and
+glPopAttrib are used as a quick way to save the old viewport
+information, this is needed because the FBO shares all of its states
+with the main context and as such any changes made affect both the FBO
+and the main context you would be normally rendering to.</p>
+<p>An important point to make here is that you&#8217;ll notice that we only
+bound and then unbound the FBO to draw to it, we didn&#8217;t reattach any
+textures or renderbuffers, this because they stay attached until you
+detach them yourself or the FBO is destroyed.</p>
+<h1>Using The Rendered To Texture</h1>
+<p>At this point our scene has been rendered to the texture and is now
+ready for us to use it and this operation itself is easy; we just bind
+the attached texture like any other texture.</p>
+<pre class="code">glBindTexture(GL_TEXTURE_2D, img);
+</pre>
+<p>Having carried that out the texture is now ready to read from as normal.</p>
+<p>Depending on the texture&#8217;s filtering setup you might also want to
+generate mipmap information for it. Many people are used to using the
+gluBuild2DMipmaps() function to build mipmap information at load time
+and some of you might also be aware of the automatic mipmap generation
+extension; the FBO extension adds a third way with the
+GenerateMipmapEXT() function.</p>
+<p>This function lets OpenGL build the mipmap information for you, the
+way it&#8217;s done depends on the hardware you are running on, and is the
+correct way to do so for textures you have rendered to (you shouldn&#8217;t
+use the automatic mipmap generation on a texture you are going to
+render to for various reasons which are covered in the spec).</p>
+<p>To use the function all you have to do is bind a texture as above and then call:</p>
+<pre class="code">glGenerateMipmapEXT(GL_TEXTURE_2D);
+</pre>
+<p>OpenGL will then generate all the required mipmap data for you so that your texture is ready to be used.</p>
+<p>It&#8217;s important to note that if you intend on using any of the mipmap
+filters (GL_LINEAR_MIPMAP_LINEAR for example) then you must call
+glGenerateMipmapEXT() before checking the framebuffer is complete or
+attempting to render to it. </p>
+<p>At setup time you can just do it as follows:</p>
+<pre class="code">glGenTextures(1, &amp;img);
+glBindTexture(GL_TEXTURE_2D, img);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8,  width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+glGenerateMipmapEXT(GL_TEXTURE_2D);
+</pre>
+<p>At this point your texture is complete and can be rendered to like normal.</p>
+<h1>Cleaning Up</h1>
+<p>Finally, when you are done with your FBO you need to clean things up
+and delete it. This, like textures, is done via a single function:</p>
+<pre class="code">glDeleteFramebuffersEXT(1, &amp;fbo);
+</pre>
+<p>You also have to clean up any <strong>renderbuffers</strong> you might have allocated, in this case the <em>depthbuffer</em> <strong>renderbuffer</strong> needs to deleted, which again works the same way as cleaning up a texture:</p>
+<pre class="code">glDeleteRenderbuffersEXT(1, &amp;depthbuffer);
+</pre>
+<p>At this point both the FBO and the <strong>renderbuffer</strong> have been freed and your clean up is completed.</p>
+<h1>Final Thoughts</h1>
+<p>Hopefully this quick tour of the FBO extension will be enough to get
+you up and running with it. For a more detailed over view you'll want
+to check out the <a href="http://www.opengl.org/registry/specs/EXT/framebuffer_object.txt">FBO spec</a> or the section on the extension in the book <a href="http://www.gamedev.net/columns/books/bookdetails.asp?productid=570&amp;CategoryID=15%20"><em>More OpenGL Game Programming</em></a></p>
+<p>In way of closing, before you go and check out the example program
+which shows a basic usage of the FBO extension I&#8217;d like to leave you
+with the following tips and notes on FBO usage.</p>
+<ol>
+	<li>Currently you can&#8217;t have a stencil attachment. There is an
+extension in the works to allow for a texture format which would allow
+depth-stencil textures and thus render to stencil, however as of yet
+there is a lack of support for it.</li>
+	<li>Don&#8217;t constantly make the
+destroy FBOs, instead generate what you need at load/setup time and
+reuse them during the program as required.</li>
+	<li>Avoid modifying
+the texture you have rendered to via any glTexImage and related calls.
+Doing so can and most probably will hurt your performance.</li>
+</ol>
+<h1>Notes on the example program</h1>
+<p>While this article talks about adding a depth renderbuffer and then
+a texture to the FBO in that order it was discovered that currently
+ATI&#8217;s drivers appear to have a bug whereby adding the depth
+renderbuffer and then a texture causes the application to crash. This
+should be kept in mind when doing any FBO related work and tested for
+as it is possible it could be fixed in a future driver revision thus
+rendering the problem non-existent.</p>
+<p>I&#8217;d also like to put out a big thanks to <a href="http://www.gamedev.net/community/forums/profile.asp?mode=display&amp;id=35639">Rick Appleton</a> for helping me test out and debug the code on NVIDA hardware, couldn&#8217;t have done it without you mate :)</p>
+<p>The example program requires some form of GLUT to be compiled and run (I used <a href="http://freeglut.sourceforge.net/">FreeGLUT</a>)</p>
+<h1>References</h1>
+<p><a href="http://www.gamedev.net/columns/books/bookdetails.asp?productid=570&amp;CategoryID=15%20">More OpenGL Game Programming</a><br>
+  <a href="http://www.opengl.org/registry/specs/EXT/framebuffer_object.txt">Framebuffer Object Spec</a><br>
+  <a href="http://download.nvidia.com/developer/presentations/2005/GDC/OpenGL_Day/OpenGL_FrameBuffer_Object.pdf">GDC 2005 Framebuffer Object pdf</a></p>
+<p align="center"><b><a href="http://www.gamedev.net/community/forums/topic.asp?key=featart&amp;uid=2331&amp;forum_id=35&amp;Topic_Title=OpenGL+Frame+Buffer+Object+101">Discuss this article in the forums</a></b></p>
+<p>
+<br><span class="maintext-2">Date this article was posted to GameDev.net: <b>11/22/2006</b>
+<br>(Note that this date does not necessarily correspond to the date the article was written)</span>
+</p><p><b>See Also:</b><br>
+
+<a href="http://www.gamedev.net/reference/list.asp?categoryid=329">Programming  </a><br>
+
+</p><p align="center">© 1999-2008 Gamedev.net. All rights reserved. <a href="http://www.gamedev.net/info/legal.htm#copyright"><u>Terms of Use</u></a> <a href="http://www.gamedev.net/info/legal.htm#privacy"><u>Privacy Policy</u></a>
+<br><span class="maintext-1">Comments? Questions? Feedback? <a href="http://www.gamedev.net/info/faq.asp">Click here!</a></span></p>
+
+</td></tr></tbody></table>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="article2331.asp_fichiers/front.js"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+<script src="article2331.asp_fichiers/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-279474-1";
+urchinTracker();
+</script>
+</body></html>

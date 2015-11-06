@@ -1,0 +1,157 @@
+<html><head><title>15-462 Shadow Mapping Tutorial Using GLSL</title></head><body alink="#ff0000" bgcolor="#ffffff" link="#0000ff" vlink="#aa00aa">
+
+<h1>15-462 Shadow Mapping Tutorial Using GLSL</h1>
+<p><a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462/web.06s/asst/project3/">Back to Project 2</a></p>
+<h2>General Idea</h2>
+<p>
+The general idea is that we'll render from the light's point of view,
+save that to a texture, and then on each pixel, determine whether the
+pixel is in shadow by comparing the texture's depth value with a
+calculated depth value.
+</p>
+<h2>Rendering the Depth Buffer to a Texture</h2>
+<p>There are two common methods for doing this. One is to render into
+the window and copy that result to a texture. The other is to render
+directly into the texture using the Framebuffer Objects extension.
+</p>
+<h4>Render to Texture using <code>glCopyTexImage</code></h4>
+<p>
+Render the scene into a window, and call <code>glCopyTexImage</code> with internal format set to <code>GL_DEPTH_COMPONENT</code> to copy the depth buffer to the texture.
+The rest of the details can be found in the man page.
+This function does the same thing as <code>glTexImage2D</code>, so apart from this you just have to generate the texture and set its filtering correctly during initialization.
+</p>
+<p>
+<b>Important notes:</b>
+</p>
+<ul>
+<li>Note that since you're rendering to the window as an intermediate
+phase, your texture size cannot be larger than the window size. Before
+rendering to the image, set your viewport to the texture size using <code>glViewport</code> and then set it back to the window size after you're done rendering.</li>
+<li>You texture must be a power of two in size to not run hideously
+slowly. While the lab machines will allow you to create a 640x480
+texture using gCopyTexImage, they will promptly fall back to software
+mode and run at rates in seconds per frame instead of frames per second.</li>
+</ul>
+<h4>Render to Texture using Framebuffer Objects</h4>
+<p>
+<b>Note: the graphics cards in WeH 5336 do not support depth-texture framebuffer objects, so you'll have to stick with using <code>glCopyTexImage2D</code></b>
+</p>
+<p>
+If you want to use FBOs to use do render-to-texture, the specification for the extension is available <a href="http://oss.sgi.com/projects/ogl-sample/registry/EXT/framebuffer_object.txt">here</a>.
+Just kidding, you don't have to read that.
+Since there aren't any good resources available online for this stuff, <a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462/web.06s/asst/project3/shadowmap/fbo.html">here is some sample code</a> to set up a render-to-depth-texture loop.
+</p>
+<h4>Notes</h4>
+<p>
+Once this has been successfully completed, the contents of the depth buffer will look something like the following image.
+</p>
+<p><a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462/web.06s/asst/project3/shadowmap/s3.png"><center><img src="Shadow%20Mapping%20Using%20GLSL_fichiers/s3.jpg"></center></a></p>
+<p>
+Note that you should be pretty careful about how you select your z-near
+and z-far clipping planes. In this case, I've set z-near to be justin
+front of the guy's head and z-far to be just beyond the floor, which
+efficiently uses the full range of the z-buffer.
+While it isn't necessary to be this excessively precise, you should
+keep an eye on your range to make sure that you aren't wasting depth,
+since that will result in artifacts.
+</p>
+<h2>Calculating Texture Coordinates</h2>
+<p>
+To convert between world coordinates and texture coordinates, you need to do two steps.
+</p><ol>
+<li>
+Multiply the world coordinate by the ModelView and Projection matrices that were used to set up rendering to the light.
+</li>
+<li>Scale and bias the result. Remember that the ModelView and
+Projection matrices will put all values intothe cube [-1 1]x[-1 1]x[-1
+1].
+However, remember that texture coordinates come from the range [0 1]x[0
+1] and textures take on values over the range [0 1].
+Therefore, you'll want do an two transformations after transforming by
+the ModelView and Projection matrices.
+The first of these will scale the result by 0.5 in all three
+directions, the second will translate the result by 0.5 in all
+directions.
+</li>
+</ol>
+<p>
+In practice, probably the best way to do this is, each frame, 
+</p><ul>
+<li>Set up the light's ModelView and Projection matrices just as you would a camera (<code>gluPerspective</code> and <code>gluLookAt</code>)</li>
+<li>Save these matrices into two <code>Mat4</code>s <code>lightModelView/ProjectionMatrix</code> by calling <code>glGetDoublev (GL_MODELVIEW_MATRIX, lightModelViewMatrix</code>), and likewise for the projection matrix</li>
+<li>Push what's being drawn back a bit so avoid z-fighting (see below) by calling <code>glPolygonOffset (0, 1)</code> and enabling <code>GL_POLYGON_OFFSET_FILL</code>
+</li><li>Draw the scene to texture</li>
+<li>Get ready to draw the scene from the camera's perspective - set up
+the camera's modelview and projection matrices and set the light
+positions (as in the coordinate systems reminder on the project page)</li>
+<li>Change the matrix mode to one of the texture matrices (determined by what <code>glActiveTexture</code> you're using) by calling <code>glMatrixMode (GL_TEXTURE)</code> and clear the matrix with <code>glLoadIdentity ()</code></li>
+<ul>
+<li>Translate by calling <code>glTranslatef (0.5, 0.5, 0.5)</code></li>
+<li>Scale by calling <code>glScalef (0.5, 0.5, 0.5)</code></li>
+<li>Multiply by the light's perspective matrix in by calling <code>glMultMatrixd (lightProjectionMatrix)</code></li>
+<li>Multiply by the light's modelview  matrix in by calling <code>glMultMatrixd (lightModelViewMatrix)</code></li>
+<li>Multiply by the inverse of the camera's modelview matrix (read it out using <code>glGetDoublev</code> just like you got the light's modeview matrix, invert it using the <code>Mat4</code> <code>invert</code> function, then call <code>glMultMatrixd</code>)</li>
+</ul>
+<li>Restore whatever state you've changed (switch to using the <code>GL_MODELVIEW</code> matrix, appropriate textures, etc).</li>
+<li>Draw objects, modifying the modelview matrix as you ordinarily would.</li>
+<li>In the vertex program, multiply the vertex's world coordinate by <code>gl_TextureMatrix[i]*gl_ModelViewMatrix</code> and save that in a varying variable.  This will convert the points into the shadow map's coordinate system.</li>
+</ul>
+<p></p>
+<p>
+Note that just as before, multiplying by <code>gl_ModelView/NormalMatrix</code> will transform things into eye coordinates, and the lights will be in eye coordinates for lighting calculations.
+</p>
+<p>
+If then, in your fragment program, you have the resulting varying texture coordinate as <code>shadowTexCoord</code> and the shadow texture map as a <code>sampler2D</code> called <code>shadowMap</code> then reading from the texture using <code>texture2DProj (shadowMap, shadowTexcoord)</code>, the result will be the following image.
+</p>
+<p><a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462/web.06s/asst/project3/shadowmap/s2.png"><center><img src="Shadow%20Mapping%20Using%20GLSL_fichiers/s2.jpg"></center></a></p>
+<p>
+That is, the color that you read out of the texture will be exactly the depth of the nearest occluder of that pixel.
+</p>
+<h2>Comparing Depth Values Manually</h2>
+<p>
+To calculate each pixel's distance from the camera, you can just look at the value <code>shadowTexCoord.z/shadowTexCoord.w</code>
+If you render that, you'll end up with an image that looks like
+</p>
+<p><a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462/web.06s/asst/project3/shadowmap/s1.png"><center><img src="Shadow%20Mapping%20Using%20GLSL_fichiers/s1.jpg"></center></a></p>
+<p>
+And now, all you need to do is compare those two depth values to determine what is in shadow and what's not.
+</p>
+<h2>Comparing Depth Values Automatically in GLSL</h2>
+<p>
+GLSL makes this a bit easier for us.
+We can specify that the depth texture will be used for comparing depth values by setting the following texture parameters using <code>glTexParameteri</code> when the shadow texture is bound.
+</p>
+<ul>
+<li>Setting <code>GL_TEXTURE_COMPARE_MODE</code> to <code>GL_COMPARE_R_TO_TEXTURE_ARB</code> will specify that we want to compare texture values to texture <code>R</code> coordinates (and the <code>R</code> will be set up to hold the depth value by the function we'll call).</li>
+<li>Setting <code>GL_TEXTURE_COMPARE_FUNC</code> to <code>GL_LEQUAL</code>
+will specify that the comparison function should return 1 when the
+texture coordinate is less or equal than the texture value (i.e. when
+the object is not in shadow).</li>
+</ul>
+<p>
+To tell GLSL that we're using texture comparison instead of texture mapping, define the shadow map texture as <code>uniform sampler2DShadow shadowMap</code> instead of <code>uniform sampler2D shadowMap</code>.
+</p>
+<p>
+Finally, with all of this set up, calling the function <code>shadow2DProj (shadowMap, shadowTexCoord)</code> will return a <code>vec4</code> that is 0 if the object is in shadow in 1 if it is not in shadow.
+</p>
+
+<h2>Final Results and Remarks</h2>
+<p>
+If you then combine these results with your normal mapping, you can
+create an image like this, and give John Carmack a run for his money
+(or something).
+</p>
+<p><a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462/web.06s/asst/project3/shadowmap/s0.png"><center><img src="Shadow%20Mapping%20Using%20GLSL_fichiers/s0b.png"></center></a></p>
+<p>
+One thing that I mentioned earlier was this z-fighting thing.
+Calling <code>glPolygonOffset (2, 2)</code> pushes the scene back by a small <code>epsilon</code>
+in the z-buffer before rendering it.
+This corresponds to allowing a little bit of wiggle room for the depth
+values, so that if they're a little bit off, we err on the side of
+assuming that they're not in shadow. If you didn't use <code>glPolygonOffset</code> then you'll get a kind of gnarly looking image caused by z-fighting as seen below.
+</p>
+<p><a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462/web.06s/asst/project3/shadowmap/s4.png"><center><img src="Shadow%20Mapping%20Using%20GLSL_fichiers/s4.jpg"></center></a></p>
+<hr>
+Last modified 2006.03.27 by <a href="http://www.cs.cmu.edu/%7Ecmcamero/">Chris Cameron</a>
+
+</body></html>

@@ -1,0 +1,2 @@
+Vous trouverez aussi de la doc très importante sur les shadowMaps dans le Orange Book, chapitre 13.2
+-fred-

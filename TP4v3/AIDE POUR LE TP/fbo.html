@@ -1,0 +1,86 @@
+<html><head><title>15-462 Shadow Mapping Tutorial - Framebuffer Objects</title></head><body alink="#ff0000" bgcolor="#ffffff" link="#0000ff" vlink="#aa00aa">
+
+<h1>15-462 Shadow Mapping Tutorial - Framebuffer Objects</h1>
+<p><a href="http://www.cs.cmu.edu/afs/cs/academic/class/15462/web.06s/asst/project3/shadowmap/index.html">Back to Shadow Mapping Tutorial</a></p>
+<h2>Render to Texture using Framebuffer Objects</h2>
+<p>
+Since there aren't any good resources available online for this stuff,
+I'll just give the code for setting up a render-to-depth-texture loop.
+</p>
+<h4>
+The following variables will be used throughout
+</h4>
+<p>
+<code>
+GLuint shadow_tx = 0; // the shadow texture<br>
+GLuint shadow_fb = 0; // the framebuffer object to render to that texture<br>
+GLuint shadow_sz = 1024; // the shadow map size
+</code>
+</p>
+<h4>
+Add this code to your initialization code to generate the framebuffer object
+</h4>
+<p>
+<code>
+        // verify FBOs are supported (otherwise we get FuBar'd Objects)<br>
+        if (!glutExtensionSupported ("GL_EXT_framebuffer_object") )<br>
+        {<br>
+ &nbsp;&nbsp;&nbsp;               cerr &lt;&lt; "FBO extension unsupported" &lt;&lt; endl;<br>
+ &nbsp;&nbsp;&nbsp;               exit (1);<br>
+        }<br>
+<br>
+        // create the texture we'll use for the shadow map<br>
+        glGenTextures (1, &amp;shadow_tx);<br>
+        glBindTexture (GL_TEXTURE_2D, shadow_tx);<br>
+glTexImage2D (GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, shadow_sz,
+shadow_sz, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);<br>
+        glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);<br>
+<br>
+        // create fbo and attach texture to ti<br>
+        glGenFramebuffersEXT (1, &amp;shadow_fb);<br>
+        glBindFramebufferEXT (GL_FRAMEBUFFER_EXT, shadow_fb);<br>
+        glFramebufferTexture2DEXT (GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, shadow_tx, 0);<br>
+        glDrawBuffer (GL_FALSE);<br>
+        glReadBuffer (GL_FALSE);<br>
+<br>
+        // verify all is well and restore state<br>
+        GLenum status = glCheckFramebufferStatusEXT (GL_FRAMEBUFFER_EXT);<br>
+        switch (status) <br>
+        {<br>
+        case GL_FRAMEBUFFER_COMPLETE_EXT:<br>
+ &nbsp;&nbsp;&nbsp;               break;<br>
+        case GL_FRAMEBUFFER_UNSUPPORTED_EXT:<br>
+ &nbsp;&nbsp;&nbsp;               cerr &lt;&lt; "FBO configuration unsupported" &lt;&lt; endl;<br>
+ &nbsp;&nbsp;&nbsp;               return 1;<br>
+        default:<br>
+ &nbsp;&nbsp;&nbsp;               cerr &lt;&lt; "FBO programmer error" &lt;&lt; endl;<br>
+ &nbsp;&nbsp;&nbsp;               return 1;<br>
+
+        }<br>
+
+        glBindFramebufferEXT (GL_FRAMEBUFFER_EXT, 0);<br>
+</code>
+</p>
+<h4>
+Add this before rendering to the shadow map
+</h4>
+<p>
+<code>
+glBindFramebufferEXT (GL_FRAMEBUFFER_EXT, shadow_fb);<br>
+glPushAttrib (GL_VIEWPORT_BIT); // save the viewport
+glViewport (0, 0, shadowSize, shadowSize);
+</code>
+</p>
+<h4>
+Add this after rendering to the shadow map
+</h4>
+<p>
+<code>
+glPopAttrib (); // restore the viewport
+glBindFramebufferEXT (GL_FRAMEBUFFER_EXT, 0);<br>
+</code>
+</p>
+<hr>
+Last modified 2006.03.16 by Chris Cameron
+
+</body></html>

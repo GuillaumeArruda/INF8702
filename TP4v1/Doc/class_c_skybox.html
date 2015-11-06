@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>TP3v1: Référence de la classe CSkybox</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.4.7 -->
+<div class="tabs">
+  <ul>
+    <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+    <li><a href="modules.html"><span>Modules</span></a></li>
+    <li id="current"><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+    <li><a href="files.html"><span>Fichiers</span></a></li>
+  </ul></div>
+<div class="tabs">
+  <ul>
+    <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+    <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+    <li><a href="functions.html"><span>Champs&nbsp;de&nbsp;donnée</span></a></li>
+  </ul></div>
+<h1>Référence de la classe CSkybox</h1><!-- doxytag: class="CSkybox" --><!-- doxytag: inherits="CModele3DAbstrait" -->Cette classe encapsule un Skybox openGL et gère les textures associées.  
+<a href="#_details">Plus de détails...</a>
+<p>
+<code>#include &lt;Skybox.h&gt;</code>
+<p>
+Est dérivée de <a class="el" href="class_c_modele3_d_abstrait.html">CModele3DAbstrait</a>.
+<p>
+Graphe d'héritage de CSkybox:<p><center><img src="class_c_skybox__inherit__graph.png" border="0" usemap="#_c_skybox__inherit__map" alt="Inheritance graph"></center>
+<map name="_c_skybox__inherit__map">
+<area href="class_c_modele3_d_abstrait.html" shape="rect" coords="6,5,142,32" alt="">
+</map>
+<center><font size="2">[<a href="graph_legend.html">légende</a>]</font></center>Graphe de collaboration de CSkybox:<p><center><img src="class_c_skybox__coll__graph.png" border="0" usemap="#_c_skybox__coll__map" alt="Collaboration graph"></center>
+<map name="_c_skybox__coll__map">
+<area href="class_c_modele3_d_abstrait.html" shape="rect" coords="6,5,142,32" alt="">
+</map>
+<center><font size="2">[<a href="graph_legend.html">légende</a>]</font></center><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skybox.html#0c779bd113a63181bfb033ac08053c10">CSkybox</a> (char *nomFichierTexture, float echelle)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">constructeur créant un skybox avec texture spécifiée unique (obligatoire)  <a href="#0c779bd113a63181bfb033ac08053c10"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skybox.html#82268d19fc64a38ed37c127accb68073">~CSkybox</a> (void)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">destructeur par défaut  <a href="#82268d19fc64a38ed37c127accb68073"></a><br></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skybox.html#94579589d07a1c1d1af2903ffc579898">dessiner</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction à implémenter pour définir la géométrie openGL du skybox (est statique, car est référée par un pointeur de fonction)  <a href="#94579589d07a1c1d1af2903ffc579898"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_skybox.html#ff36a83fc7cde7deb80a6cd62220c2ad">appliquerTextures</a> (void *)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction à implémenter pour définir un texturage personnalisé  <a href="#ff36a83fc7cde7deb80a6cd62220c2ad"></a><br></td></tr>
+</table>
+<hr><a name="_details"></a><h2>Description détaillée</h2>
+Cette classe encapsule un Skybox openGL et gère les textures associées. 
+<p>
+<dl compact><dt><b>Auteur:</b></dt><dd>Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+<p>
+<hr><h2>Documentation des contructeurs et destructeur</h2>
+<a class="anchor" name="0c779bd113a63181bfb033ac08053c10"></a><!-- doxytag: member="CSkybox::CSkybox" ref="0c779bd113a63181bfb033ac08053c10" args="(char *nomFichierTexture, float echelle)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CSkybox::CSkybox           </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>nomFichierTexture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&nbsp;</td>
+          <td class="paramname"> <em>echelle</em> = <code>1.0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+constructeur créant un skybox avec texture spécifiée unique (obligatoire) 
+<p>
+public constructor <a class="el" href="class_c_skybox.html">CSkybox</a> <br>
+ Construit un skybox au moyen d'une seule texture (seule possibilité pour un skybox) attention : le format de la texture DOIT être en format "cross".<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-02-20 </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="82268d19fc64a38ed37c127accb68073"></a><!-- doxytag: member="CSkybox::~CSkybox" ref="82268d19fc64a38ed37c127accb68073" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CSkybox::~CSkybox           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+destructeur par défaut 
+<p>
+public destructor ~CSkybox <br>
+ Destructeur par défaut d'un skybox<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-02-20 </dd></dl>
+
+</div>
+</div><p>
+<hr><h2>Documentation des fonctions membres</h2>
+<a class="anchor" name="ff36a83fc7cde7deb80a6cd62220c2ad"></a><!-- doxytag: member="CSkybox::appliquerTextures" ref="ff36a83fc7cde7deb80a6cd62220c2ad" args="(void *)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CSkybox::appliquerTextures           </td>
+          <td>(</td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+fonction à implémenter pour définir un texturage personnalisé 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="94579589d07a1c1d1af2903ffc579898"></a><!-- doxytag: member="CSkybox::dessiner" ref="94579589d07a1c1d1af2903ffc579898" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CSkybox::dessiner           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+fonction à implémenter pour définir la géométrie openGL du skybox (est statique, car est référée par un pointeur de fonction) 
+<p>
+public static dessiner <br>
+ Fonction à implémenter absolument si on veut voir apparaître quelque chose ! cette fonction sera appelée par la classe de base (<a class="el" href="class_c_modele3_d_abstrait.html">CModele3DAbstrait</a>) par l'entremise d'une pointeur de fonction passé à la construction. On mettra ici uniquement le graphisme associé à l'objet (i.e. glBegin()...glVertex(), etc...)<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-02-20 </dd></dl>
+
+</div>
+</div><p>
+<hr>La documentation de cette classe a été générée à partir des fichiers suivants:<ul>
+<li><a class="el" href="_skybox_8h.html">Skybox.h</a><li><a class="el" href="_skybox_8cpp.html">Skybox.cpp</a></ul>
+<hr size="1"><address style="align: right;"><small>Généré le Mon Oct 20 18:04:37 2008 pour TP3v1 par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.7 </small></address>
+</body>
+</html>

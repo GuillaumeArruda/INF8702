@@ -1,0 +1,474 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>TP3v1: Référence de la classe CFBO</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.4.7 -->
+<div class="tabs">
+  <ul>
+    <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+    <li><a href="modules.html"><span>Modules</span></a></li>
+    <li id="current"><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+    <li><a href="files.html"><span>Fichiers</span></a></li>
+  </ul></div>
+<div class="tabs">
+  <ul>
+    <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+    <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+    <li><a href="functions.html"><span>Champs&nbsp;de&nbsp;donnée</span></a></li>
+  </ul></div>
+<h1>Référence de la classe CFBO</h1><!-- doxytag: class="CFBO" -->Cette classe encapsule un FBO (Frame Buffer Object) openGL.  
+<a href="#_details">Plus de détails...</a>
+<p>
+<code>#include &lt;FBO.h&gt;</code>
+<p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#6ce21e0796c4923f245e75199795609a">CFBO</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructeur par défaut.  <a href="#6ce21e0796c4923f245e75199795609a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#2439e056c48d8ac48341986f1d5dfbef">~CFBO</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">destructeur par défaut  <a href="#2439e056c48d8ac48341986f1d5dfbef"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#d209688073e81688183e38664246b715">Init</a> (int w, int h, int format)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialise le FBO et crée une texture de rendu pour RGB et pour DepthBuffer.  <a href="#d209688073e81688183e38664246b715"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#258f4a697d5f2e661def5b2f0138f385">Liberer</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Libère la mémoire openGL.  <a href="#258f4a697d5f2e661def5b2f0138f385"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#94d152978d4e04049d3181c5c5f1703d">Bind</a> (GLenum texUnit)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Charge le FBO comme une texture 2D openGL.  <a href="#94d152978d4e04049d3181c5c5f1703d"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#1d372d9f2e0d14ba1f7bf79f481fa364">CommencerCapture</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Commencement de la capture des instruction openGL réalisant le contenu du FBO.  <a href="#1d372d9f2e0d14ba1f7bf79f481fa364"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#72a49907097bafb020b9ffad5fa2ef2c">TerminerCapture</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fin de la description du contenu du FBO  <a href="#72a49907097bafb020b9ffad5fa2ef2c"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#3d51bb8133ec1adff33dc6068df83740">GetWidth</a> () const </td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Retourne la largeur de la texture.  <a href="#3d51bb8133ec1adff33dc6068df83740"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#d337608b78a55f303150f00dc6a971e4">GetHeight</a> () const </td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Retourne la hauteur de la texture.  <a href="#d337608b78a55f303150f00dc6a971e4"></a><br></td></tr>
+<tr><td colspan="2"><br><h2>Attributs privés</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">GLuint&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#e2ba28554417cc298c1e2cb52dfb1cd5">m_FBO</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">l'ID du FBO  <a href="#e2ba28554417cc298c1e2cb52dfb1cd5"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">GLuint&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#310856e40930919669a5e4ebeb8657e1">m_DepthRenderBuffer</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">L'ID du tampon de profondeur.  <a href="#310856e40930919669a5e4ebeb8657e1"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">GLuint&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#e433ae84dbae26e67d3d502ca76137ac">m_Texture</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">l'ID de la texture RGB  <a href="#e433ae84dbae26e67d3d502ca76137ac"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">GLint&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#f7479cf92be6fbe0f9fedce926be5ea3">m_InternalFormat</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">le format interne (communément GL_RGB)  <a href="#f7479cf92be6fbe0f9fedce926be5ea3"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">GLenum&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#398cdc96eb3ea7f41340c45949db7a81">m_Target</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">la cible de la texture (communément GL_TEXTURE2D)  <a href="#398cdc96eb3ea7f41340c45949db7a81"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#585da5bc70f73d2beba1c450ed23761a">m_TextureW</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">la largeur de la texture  <a href="#585da5bc70f73d2beba1c450ed23761a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_f_b_o.html#f0677dc2f3d85bf33adae3878b959a66">m_TextureH</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">la hauteur de la texture  <a href="#f0677dc2f3d85bf33adae3878b959a66"></a><br></td></tr>
+</table>
+<hr><a name="_details"></a><h2>Description détaillée</h2>
+Cette classe encapsule un FBO (Frame Buffer Object) openGL. 
+<p>
+<dl compact><dt><b>Auteur:</b></dt><dd>Olivier Dionne </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+<p>
+<hr><h2>Documentation des contructeurs et destructeur</h2>
+<a class="anchor" name="6ce21e0796c4923f245e75199795609a"></a><!-- doxytag: member="CFBO::CFBO" ref="6ce21e0796c4923f245e75199795609a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CFBO::CFBO           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Constructeur par défaut. 
+<p>
+public overloaded constructor <a class="el" href="class_c_f_b_o.html">CFBO</a> <br>
+<p>
+Crée un FBO très simple où tous les membres privés sont à 0.<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Olivier Dionne </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="2439e056c48d8ac48341986f1d5dfbef"></a><!-- doxytag: member="CFBO::~CFBO" ref="2439e056c48d8ac48341986f1d5dfbef" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CFBO::~CFBO           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+destructeur par défaut 
+<p>
+public destructor ~CFBO <br>
+<p>
+Détruit un objet FBO<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Olivier Dionne </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+</div>
+</div><p>
+<hr><h2>Documentation des fonctions membres</h2>
+<a class="anchor" name="94d152978d4e04049d3181c5c5f1703d"></a><!-- doxytag: member="CFBO::Bind" ref="94d152978d4e04049d3181c5c5f1703d" args="(GLenum texUnit)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFBO::Bind           </td>
+          <td>(</td>
+          <td class="paramtype">GLenum&nbsp;</td>
+          <td class="paramname"> <em>texUnit</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Charge le FBO comme une texture 2D openGL. 
+<p>
+public Bind <br>
+<p>
+Cette méthode lie la texture interne RGB à la cible openGL courante et active du même coup l'unité de texture spécifiée. C'est la fonction a appeler juste avant de dessiner les primitives sur lesquelles on veut appliquer le FBO en tant que texture.<p>
+<dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>texUnit</em>&nbsp;</td><td>GLenum L'Identifiant openGL de l'unité de texture désirée</td></tr>
+  </table>
+</dl>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Olivier Dionne, Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="1d372d9f2e0d14ba1f7bf79f481fa364"></a><!-- doxytag: member="CFBO::CommencerCapture" ref="1d372d9f2e0d14ba1f7bf79f481fa364" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFBO::CommencerCapture           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Commencement de la capture des instruction openGL réalisant le contenu du FBO. 
+<p>
+public CommencerCapture <br>
+<p>
+Cette fonction débute la définition du contenu du FBO. Son utilisation est très simple et intuitive. Une fois le FBO construit et initialiser avec new () et <a class="el" href="class_c_f_b_o.html#d209688073e81688183e38664246b715">Init()</a>, on n'a qu'à insérer les commandes openGL produisant le rendu externe voulu (qui sera enregistré dans le FBO) entre les commandes <a class="el" href="class_c_f_b_o.html#1d372d9f2e0d14ba1f7bf79f481fa364">CommencerCapture()</a> et <a class="el" href="class_c_f_b_o.html#72a49907097bafb020b9ffad5fa2ef2c">TerminerCapture()</a>;<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Olivier Dionne, Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="d337608b78a55f303150f00dc6a971e4"></a><!-- doxytag: member="CFBO::GetHeight" ref="d337608b78a55f303150f00dc6a971e4" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CFBO::GetHeight           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Retourne la hauteur de la texture. 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="3d51bb8133ec1adff33dc6068df83740"></a><!-- doxytag: member="CFBO::GetWidth" ref="3d51bb8133ec1adff33dc6068df83740" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int CFBO::GetWidth           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Retourne la largeur de la texture. 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="d209688073e81688183e38664246b715"></a><!-- doxytag: member="CFBO::Init" ref="d209688073e81688183e38664246b715" args="(int w, int h, int format)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFBO::Init           </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>format</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Initialise le FBO et crée une texture de rendu pour RGB et pour DepthBuffer. 
+<p>
+public Init <br>
+<p>
+Cette méthode initialise le FBO en créant les noms de texture à l'interne. Pour une mise à jour du FBO à chaque image, cette fonction NE DEVRAIT PAS être appelée constamment, parce qu'elle consomme de la mémoire et est relativement lente. On conseille donc d'appeler <a class="el" href="class_c_f_b_o.html#d209688073e81688183e38664246b715">Init()</a> une seule fois au début de l'application, puis simplement d'utiliser la paire <a class="el" href="class_c_f_b_o.html#1d372d9f2e0d14ba1f7bf79f481fa364">CommencerCapture()</a> et <a class="el" href="class_c_f_b_o.html#72a49907097bafb020b9ffad5fa2ef2c">TerminerCapture()</a> afin de mettre à jour le contenu interne du FBO en tout temps. Évidemment, parce qu'il est important que la taille du FBO soit la même que le viewport courant, si la taille du viewport change en cours d'exécution, il est impératif d'appeler <a class="el" href="class_c_f_b_o.html#d209688073e81688183e38664246b715">Init()</a> à nouveau (avec les nouvelles valeurs de w et de h), mais en ayant pris soin au préalable de LIBERER la mémoire du FBO.<p>
+<dl compact><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>w</em>&nbsp;</td><td>int La largeur du viewport / de la texture interne </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>h</em>&nbsp;</td><td>int La hauteur du viewport / de la texture interne </td></tr>
+    <tr><td valign="top"><tt>[in]</tt>&nbsp;</td><td valign="top"><em>format</em>&nbsp;</td><td>int Le format interne de la texture du FBO (communément GL_RGB)</td></tr>
+  </table>
+</dl>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Olivier Dionne </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="258f4a697d5f2e661def5b2f0138f385"></a><!-- doxytag: member="CFBO::Liberer" ref="258f4a697d5f2e661def5b2f0138f385" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFBO::Liberer           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Libère la mémoire openGL. 
+<p>
+public Liberer <br>
+<p>
+Cette fonction libère l'espace mémoire interne du FBO<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Olivier Dionne </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="72a49907097bafb020b9ffad5fa2ef2c"></a><!-- doxytag: member="CFBO::TerminerCapture" ref="72a49907097bafb020b9ffad5fa2ef2c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFBO::TerminerCapture           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+fin de la description du contenu du FBO 
+<p>
+public TerminerCapture <br>
+<p>
+Cette fonction termine la définition du contenu du FBO. Son utilisation est très simple et intuitive. Une fois le FBO construit et initialiser avec new () et <a class="el" href="class_c_f_b_o.html#d209688073e81688183e38664246b715">Init()</a>, on n'a qu'à insérer les commandes openGL produisant le rendu externe voulu (qui sera enregistré dans le FBO) entre les commandes <a class="el" href="class_c_f_b_o.html#1d372d9f2e0d14ba1f7bf79f481fa364">CommencerCapture()</a> et <a class="el" href="class_c_f_b_o.html#72a49907097bafb020b9ffad5fa2ef2c">TerminerCapture()</a>;<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Olivier Dionne </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-10-19 </dd></dl>
+
+</div>
+</div><p>
+<hr><h2>Documentation des champs</h2>
+<a class="anchor" name="310856e40930919669a5e4ebeb8657e1"></a><!-- doxytag: member="CFBO::m_DepthRenderBuffer" ref="310856e40930919669a5e4ebeb8657e1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLuint <a class="el" href="class_c_f_b_o.html#310856e40930919669a5e4ebeb8657e1">CFBO::m_DepthRenderBuffer</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+L'ID du tampon de profondeur. 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="e2ba28554417cc298c1e2cb52dfb1cd5"></a><!-- doxytag: member="CFBO::m_FBO" ref="e2ba28554417cc298c1e2cb52dfb1cd5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLuint <a class="el" href="class_c_f_b_o.html#e2ba28554417cc298c1e2cb52dfb1cd5">CFBO::m_FBO</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+l'ID du FBO 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="f7479cf92be6fbe0f9fedce926be5ea3"></a><!-- doxytag: member="CFBO::m_InternalFormat" ref="f7479cf92be6fbe0f9fedce926be5ea3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLint <a class="el" href="class_c_f_b_o.html#f7479cf92be6fbe0f9fedce926be5ea3">CFBO::m_InternalFormat</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+le format interne (communément GL_RGB) 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="398cdc96eb3ea7f41340c45949db7a81"></a><!-- doxytag: member="CFBO::m_Target" ref="398cdc96eb3ea7f41340c45949db7a81" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLenum <a class="el" href="class_c_f_b_o.html#398cdc96eb3ea7f41340c45949db7a81">CFBO::m_Target</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+la cible de la texture (communément GL_TEXTURE2D) 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="e433ae84dbae26e67d3d502ca76137ac"></a><!-- doxytag: member="CFBO::m_Texture" ref="e433ae84dbae26e67d3d502ca76137ac" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GLuint <a class="el" href="class_c_f_b_o.html#e433ae84dbae26e67d3d502ca76137ac">CFBO::m_Texture</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+l'ID de la texture RGB 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="f0677dc2f3d85bf33adae3878b959a66"></a><!-- doxytag: member="CFBO::m_TextureH" ref="f0677dc2f3d85bf33adae3878b959a66" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_c_f_b_o.html#f0677dc2f3d85bf33adae3878b959a66">CFBO::m_TextureH</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+la hauteur de la texture 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="585da5bc70f73d2beba1c450ed23761a"></a><!-- doxytag: member="CFBO::m_TextureW" ref="585da5bc70f73d2beba1c450ed23761a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_c_f_b_o.html#585da5bc70f73d2beba1c450ed23761a">CFBO::m_TextureW</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+la largeur de la texture 
+<p>
+
+</div>
+</div><p>
+<hr>La documentation de cette classe a été générée à partir des fichiers suivants:<ul>
+<li><a class="el" href="_f_b_o_8h.html">FBO.h</a><li><a class="el" href="_f_b_o_8cpp.html">FBO.cpp</a></ul>
+<hr size="1"><address style="align: right;"><small>Généré le Mon Oct 20 18:04:37 2008 pour TP3v1 par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.7 </small></address>
+</body>
+</html>

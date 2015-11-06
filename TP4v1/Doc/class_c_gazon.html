@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>TP3v1: Référence de la classe CGazon</title>
+<link href="doxygen.css" rel="stylesheet" type="text/css">
+<link href="tabs.css" rel="stylesheet" type="text/css">
+</head><body>
+<!-- Généré par Doxygen 1.4.7 -->
+<div class="tabs">
+  <ul>
+    <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+    <li><a href="modules.html"><span>Modules</span></a></li>
+    <li id="current"><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+    <li><a href="files.html"><span>Fichiers</span></a></li>
+  </ul></div>
+<div class="tabs">
+  <ul>
+    <li><a href="annotated.html"><span>Structures&nbsp;de&nbsp;données</span></a></li>
+    <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+    <li><a href="functions.html"><span>Champs&nbsp;de&nbsp;donnée</span></a></li>
+  </ul></div>
+<h1>Référence de la classe CGazon</h1><!-- doxytag: class="CGazon" --><!-- doxytag: inherits="CModele3DAbstrait,CSurfaceBSplinaire" -->Cette classe encapsule une patch bsplinaire (gazon).  
+<a href="#_details">Plus de détails...</a>
+<p>
+<code>#include &lt;Gazon.h&gt;</code>
+<p>
+Est dérivée de <a class="el" href="class_c_modele3_d_abstrait.html">CModele3DAbstrait</a>, et <a class="el" href="class_c_surface_b_splinaire.html">CSurfaceBSplinaire</a>.
+<p>
+Graphe d'héritage de CGazon:<p><center><img src="class_c_gazon__inherit__graph.png" border="0" usemap="#_c_gazon__inherit__map" alt="Inheritance graph"></center>
+<map name="_c_gazon__inherit__map">
+<area href="class_c_modele3_d_abstrait.html" shape="rect" coords="5,5,141,32" alt="">
+<area href="class_c_surface_b_splinaire.html" shape="rect" coords="165,5,304,32" alt="">
+</map>
+<center><font size="2">[<a href="graph_legend.html">légende</a>]</font></center>Graphe de collaboration de CGazon:<p><center><img src="class_c_gazon__coll__graph.png" border="0" usemap="#_c_gazon__coll__map" alt="Collaboration graph"></center>
+<map name="_c_gazon__coll__map">
+<area href="class_c_modele3_d_abstrait.html" shape="rect" coords="5,96,141,123" alt="">
+<area href="class_c_surface_b_splinaire.html" shape="rect" coords="165,96,304,123" alt="">
+<area href="struct_point.html" shape="rect" coords="209,5,260,32" alt="">
+</map>
+<center><font size="2">[<a href="graph_legend.html">légende</a>]</font></center><table border="0" cellpadding="0" cellspacing="0">
+<tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_gazon.html#560310298f6bd3fe529b602edf53f000">CGazon</a> (char *nomFichierTexture, float largeurGazon=1.0, float longueurGazon=1.0)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">constructeur créant une patch bsplinaire (gazon) avec texture spécifiée unique (obligatoire)  <a href="#560310298f6bd3fe529b602edf53f000"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_gazon.html#c73d4017251a5943d4494b654974c6a1">~CGazon</a> (void)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">destructeur par défaut  <a href="#c73d4017251a5943d4494b654974c6a1"></a><br></td></tr>
+<tr><td colspan="2"><br><h2>Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_gazon.html#296882523f6ab97061c4f8e735c72702">dessiner</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction à implémenter pour définir la géométrie openGL du gazon (est statique, car est référée par un pointeur de fonction)  <a href="#296882523f6ab97061c4f8e735c72702"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_gazon.html#4075f4b5ac1fa1ba43407abbc7bcc4c4">appliquerTextures</a> (void *ptr=NULL)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">fonction à implémenter pour définir un texturage personnalisé  <a href="#4075f4b5ac1fa1ba43407abbc7bcc4c4"></a><br></td></tr>
+</table>
+<hr><a name="_details"></a><h2>Description détaillée</h2>
+Cette classe encapsule une patch bsplinaire (gazon). 
+<p>
+<dl compact><dt><b>Auteur:</b></dt><dd>Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2007-12-11 </dd></dl>
+
+<p>
+<hr><h2>Documentation des contructeurs et destructeur</h2>
+<a class="anchor" name="560310298f6bd3fe529b602edf53f000"></a><!-- doxytag: member="CGazon::CGazon" ref="560310298f6bd3fe529b602edf53f000" args="(char *nomFichierTexture, float largeurGazon=1.0, float longueurGazon=1.0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CGazon::CGazon           </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>nomFichierTexture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&nbsp;</td>
+          <td class="paramname"> <em>largeurGazon</em> = <code>1.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&nbsp;</td>
+          <td class="paramname"> <em>longueurGazon</em> = <code>1.0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+constructeur créant une patch bsplinaire (gazon) avec texture spécifiée unique (obligatoire) 
+<p>
+public constructor <a class="el" href="class_c_gazon.html">CGazon</a> <br>
+ Construit un skybox au moyen d'une seule texture (seule possibilité pour un skybox)<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-02-20 </dd></dl>
+
+</div>
+</div><p>
+<a class="anchor" name="c73d4017251a5943d4494b654974c6a1"></a><!-- doxytag: member="CGazon::~CGazon" ref="c73d4017251a5943d4494b654974c6a1" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CGazon::~CGazon           </td>
+          <td>(</td>
+          <td class="paramtype">void&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+destructeur par défaut 
+<p>
+public destructor ~CGazon <br>
+ Destructeur par défaut d'un skybox<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-02-20 </dd></dl>
+
+</div>
+</div><p>
+<hr><h2>Documentation des fonctions membres</h2>
+<a class="anchor" name="4075f4b5ac1fa1ba43407abbc7bcc4c4"></a><!-- doxytag: member="CGazon::appliquerTextures" ref="4075f4b5ac1fa1ba43407abbc7bcc4c4" args="(void *ptr=NULL)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CGazon::appliquerTextures           </td>
+          <td>(</td>
+          <td class="paramtype">void *&nbsp;</td>
+          <td class="paramname"> <em>ptr</em> = <code>NULL</code>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+fonction à implémenter pour définir un texturage personnalisé 
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="296882523f6ab97061c4f8e735c72702"></a><!-- doxytag: member="CGazon::dessiner" ref="296882523f6ab97061c4f8e735c72702" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CGazon::dessiner           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+fonction à implémenter pour définir la géométrie openGL du gazon (est statique, car est référée par un pointeur de fonction) 
+<p>
+public static dessiner <br>
+ Fonction à implémenter absolument si on veut voir apparaître quelque chose ! cette fonction sera appelée par la classe de base (<a class="el" href="class_c_modele3_d_abstrait.html">CModele3DAbstrait</a>) par l'entremise d'une pointeur de fonction passé à la construction. On mettra ici uniquement le graphisme associé à l'objet (i.e. glBegin()...glVertex(), etc...)<p>
+<dl compact><dt><b>Renvoie:</b></dt><dd>Aucune</dd></dl>
+<dl compact><dt><b>Auteur:</b></dt><dd>Frédéric Plourde </dd></dl>
+<dl compact><dt><b>Date:</b></dt><dd>2008-02-20 </dd></dl>
+
+</div>
+</div><p>
+<hr>La documentation de cette classe a été générée à partir des fichiers suivants:<ul>
+<li><a class="el" href="_gazon_8h.html">Gazon.h</a><li><a class="el" href="_gazon_8cpp.html">Gazon.cpp</a></ul>
+<hr size="1"><address style="align: right;"><small>Généré le Mon Oct 20 18:04:37 2008 pour TP3v1 par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.4.7 </small></address>
+</body>
+</html>

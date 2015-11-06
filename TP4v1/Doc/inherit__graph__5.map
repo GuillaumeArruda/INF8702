@@ -1,0 +1,6 @@
+base referer
+rect $class_c_modele3_d_abstrait.html 7,56 143,83
+rect $class_c_gazon.html 196,6 266,32
+rect $class_c_skybox.html 194,56 268,83
+rect $class_c_t_v.html 207,107 255,134
+rect $class_c_surface_b_splinaire.html 6,6 144,32

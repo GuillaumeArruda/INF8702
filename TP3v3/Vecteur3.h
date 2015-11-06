@@ -565,18 +565,16 @@ namespace Math3D
 	///////////////////////////////////////////////////////////////////////////////
 	inline const CVecteur3 CVecteur3::Refract( const CVecteur3& Vecteur, const CVecteur3& Normal, const REAL IndiceRefractionRatio )
 	{
-		CVecteur3 Result;
         REAL nDotv = ProdScal(Normaliser(Normal), Normaliser(Vecteur));
         REAL k = 1.0 - IndiceRefractionRatio * IndiceRefractionRatio * (1.0 - nDotv * nDotv);
-        if (k <= 0)
+        if (k < 0)
         {
-            return CVecteur3::Reflect(Vecteur, Normal);;
+            return CVecteur3::Reflect(Vecteur, Normal);
         }
         else
         {
-            Result = IndiceRefractionRatio * Vecteur - (IndiceRefractionRatio * nDotv + sqrt(k)) * Normal;
+            return IndiceRefractionRatio * Vecteur - (IndiceRefractionRatio * nDotv + sqrt(k)) * Normal;
         }
-        return Result;
 	}
 }
 

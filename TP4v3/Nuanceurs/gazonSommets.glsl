@@ -48,9 +48,7 @@ vec4 calculerCoordProjectives(in int IDTextureMatrix)
     // à l'aide de la matrice projective indiquée en argument. Mettre
     // le résultat dans shadowCoordLight qui sera retourné et lancé vers
     // le nuanceur de fragments.
-    // ... 
-    // ...
-
+	shadowCoordLight = gl_TextureMatrix[IDTextureMatrix] * gl_Vertex;
     return (shadowCoordLight);
 }
 

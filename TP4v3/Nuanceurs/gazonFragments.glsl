@@ -160,9 +160,7 @@ float calculerOmbrage(sampler2DShadow shadowMap, vec4 shadowCoordLight)
     // avec profondeur lue dans la carte afin de prendre une décision sur
     // l'ombrage... et renvoyez le facteur multiplicatif dans l'un ou l'autre
     // des cas.
-    // ...
-    // ...
-    // ...
+	facteurOmbrage = texture(shadowMap,vec3(shadowCoordLight.xy,shadowCoordLight.z/shadowCoordLight.w));
 
     return (facteurOmbrage);
 }

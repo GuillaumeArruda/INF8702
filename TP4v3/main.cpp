@@ -903,15 +903,13 @@ void construireCartesOmbrage()
         // Ajustement de l'environnement correct pour lumière en cours
         // à ajuster correctement : GL_MODELVIEW et GL_PROJECTION
         glMatrixMode(GL_PROJECTION);
-        glPushMatrix();
         glLoadIdentity();
         gluPerspective(60.0, (GLfloat)CVar::currentW / (GLfloat)CVar::currentH, 0.1, 2000.0);
 
         
         glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
         glLoadIdentity();
-        gluLookAt(pos[0], pos[1], pos[2], 0, 0, 0, 0, 1, 0); //TODO modifier center
+        gluLookAt(pos[0], pos[1], pos[2], 0, 0, 0, 0, 1, 0);
 
         // Ajout d'un polygon offset pour obtenir un meilleur résultat (faccultatif)
         // ...
@@ -933,10 +931,7 @@ void construireCartesOmbrage()
 
 	    // remettre les matrices GL_MODELVIEW ET GL_PROJECTION
 	    // qui étaient là avant...
-        glMatrixMode(GL_MODELVIEW);
-        glPopMatrix();
-        glMatrixMode(GL_PROJECTION);
-        glPopMatrix();
+
 
 	    // terminer la définition du FBO correspondant
         shadowMaps[i]->TerminerCapture();
@@ -991,33 +986,55 @@ void construireMatricesProjectivesEclairage()
 	// ...
 	// ...
 	// ... la sauvegarder dans "gazonModelMatrix"
-
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+    
+    glTranslatef(-150.0, -30.0, 14.2);
+    glScalef(CCst::largeurGazon, CCst::longueurGazon, CCst::hauteurGazon);
+    glTranslatef(-3.5f, -1.5f, 0.0);
+    glGetFloatv(GL_MODELVIEW, gazonModelMatrix);
 
 	// réconstruire/récupérer la matrice VIEW de la lumière
 	// ...
 	// ...
 	// ... la sauvegarder dans "lightViewMatrix"
+    glLoadIdentity();
+    gluLookAt(pos[0], pos[1], pos[2], 0, 0, 0, 0, 1, 0);
+
+    glGetFloatv(GL_MODELVIEW, lightViewMatrix);
+
 
 
 	// réconstruire/récupérer la matrice PROJECTION de la lumière
 	// ...
 	// ...
 	// ... la sauvegarder dans "lightProjectionMatrix"
-
-
-	// Construire la matrice de TEXTURE à passer au nuanceur
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    gluPerspective(60.0, (GLfloat)CVar::currentW / (GLfloat)CVar::currentH, 0.1, 2000.0);
+    glGetFloatv(GL_PROJECTION, lightProjectionMatrix);
+	
+    // Construire la matrice de TEXTURE à passer au nuanceur
 	// et Changer la texture active en fonction de la lumière considérée
 	glMatrixMode( GL_TEXTURE );
 	glActiveTexture(CCst::unitesTextures[i+1]);
-
+    glLoadIdentity();
 	// construire/calculer la matrice projective d'éclairage
 	// ...
 	// ...
 	// ...
 	// ...
+    glMultMatrixf(gazonModelMatrix);
+    glMultMatrixf(lightViewMatrix);
+    glMultMatrixf(lightProjectionMatrix);
 
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
 	// Remettre en MODELVIEW avant de quitter la fonction
 	glMatrixMode( GL_MODELVIEW );
+    glPopMatrix();
     }
 }
 

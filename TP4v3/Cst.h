@@ -33,8 +33,8 @@
 // NOTE : Pour activer le mode AIDE_POUR_TP, vous n'avez
 // qu'à décommenter la ligne suivante.
 ///////////////////////////////////////////////
-//#define AIDE_POUR_TP
-
+#define AIDE_POUR_TP
+ 
 
 ///////////////////////////////////////////////
 // définitions de types globaux              //

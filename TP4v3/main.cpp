@@ -265,7 +265,7 @@ void dessinerScene(bool dessinerObjets)
     // en mode DEPTH_COMPONENT par la suite.
 
     progNuanceurTest.activer(); 
-    int shadowMapAAfficher = 2;
+    int shadowMapAAfficher = 0;
     glPushMatrix(); {
 	shadowMaps[shadowMapAAfficher]->Bind(GL_TEXTURE0);
 
@@ -889,41 +889,60 @@ void construireCartesOmbrage()
     // Construire les trois cartes d'ombrage
     for (unsigned int i = 0; i < lumieres.size(); i++)
     {
-	// obtenir la position de la lumière en cours dans "pos"
-	progNuanceurVenus.activer();
-	lumieres[i]->obtenirPos(pos);
+        // obtenir la position de la lumière en cours dans "pos"
+        progNuanceurVenus.activer();
+        lumieres[i]->obtenirPos(pos);
 
-	// commencer la définition du FBO correspondant
-	// ...
+        // commencer la définition du FBO correspondant
+        shadowMaps[i]->CommencerCapture();
 
-	// Définir le bon viewport de la shadow map
-	// ...
+        // Définir le bon viewport de la shadow map
+        glPushAttrib(GL_VIEWPORT_BIT);
+        glViewport(0, 0, shadowMaps[i]->GetWidth(), shadowMaps[i]->GetHeight());
 
-	// Ajustement de l'environnement correct pour lumière en cours
-	// à ajuster correctement : GL_MODELVIEW etGL_PROJECTION
-	// ...
-	// ...
-	// ...
+        // Ajustement de l'environnement correct pour lumière en cours
+        // à ajuster correctement : GL_MODELVIEW et GL_PROJECTION
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+        glLoadIdentity();
+        gluPerspective(60.0, (GLfloat)CVar::currentW / (GLfloat)CVar::currentH, 0.1, 2000.0);
 
-	// Ajout d'un polygon offset pour obtenir un meilleur résultat (faccultatif)
-	// ...
+        
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+        glLoadIdentity();
+        gluLookAt(pos[0], pos[1], pos[2], 0, 0, 0, 0, 1, 0); //TODO modifier center
+
+        // Ajout d'un polygon offset pour obtenir un meilleur résultat (faccultatif)
+        // ...
 
 
-	// ne pas oublier d'effacer les bits de couleur et de profondeur
-	// ...
+        // ne pas oublier d'effacer les bits de couleur et de profondeur
+        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-	// afficher le modèle 3D en GL_MODELVIEW
-	// ...
+        glPushMatrix();
 
-	// remettre les matrices GL_MODELVIEW ET GL_PROJECTION
-	// qui étaient là avant...
-	// ...
+	    // afficher le modèle 3D en GL_MODELVIEW
+        glRotated(180.0, 1.0, 0.0, 0.0);
+        glRotated(CVar::angleRotX, 1.0, 0.0, 0.0);
+        glRotated(CVar::angleRotY, 0.0, 1.0, 0.0);
+        glRotated(CVar::angleRotZ, 0.0, 0.0, 1.0);
 
-	// terminer la définition du FBO correspondant
-	// ...
+        modele3D->afficher();
+        glPopMatrix();
 
-	// "Popper" le viewport
-	// ...
+	    // remettre les matrices GL_MODELVIEW ET GL_PROJECTION
+	    // qui étaient là avant...
+        glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+        glMatrixMode(GL_PROJECTION);
+        glPopMatrix();
+
+	    // terminer la définition du FBO correspondant
+        shadowMaps[i]->TerminerCapture();
+        
+	    // "Popper" le viewport
+        glPopAttrib();
     }
 }
 

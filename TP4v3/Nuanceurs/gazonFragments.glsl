@@ -17,19 +17,19 @@ uniform int shadowMapOn;
 // de texture indique où dans la carte d'ombrage corres
 // pondante on doit échantillonner la "distance" du fragment
 // courant à la lumière en question.
-varying vec4 ShadowCoordLight0;
-varying vec4 ShadowCoordLight1;
-varying vec4 ShadowCoordLight2;
+in vec4 ShadowCoordLight0;
+in vec4 ShadowCoordLight1;
+in vec4 ShadowCoordLight2;
 
 // varyings pour le calcul de l'éclairage par fragments
-varying vec3 fragNormal;
-varying vec3 fragLight0Vect = vec3(0.0, 0.0, 0.0);
-varying vec3 fragLight1Vect = vec3(0.0, 0.0, 0.0);
-varying vec3 fragLight2Vect = vec3(0.0, 0.0, 0.0);
-
+in vec3 fragNormal;
+in vec3 fragLight0Vect;
+in vec3 fragLight1Vect;
+in vec3 fragLight2Vect;
 // Accumulateurs pour les facteurs d'éclairage
 vec4 Ambient;
 vec4 Diffuse;
+
 
 // Calcul pour une lumière ponctuelle
 void pointLight(in vec3 lightVect)
@@ -160,8 +160,10 @@ float calculerOmbrage(sampler2DShadow shadowMap, vec4 shadowCoordLight)
     // avec profondeur lue dans la carte afin de prendre une décision sur
     // l'ombrage... et renvoyez le facteur multiplicatif dans l'un ou l'autre
     // des cas.
-	facteurOmbrage = texture(shadowMap,vec3(shadowCoordLight.xy,shadowCoordLight.z/shadowCoordLight.w));
-
+	if(shadowCoordLight.z / shadowCoordLight.w > shadow2DProj(shadowMap,shadowCoordLight).r)
+	{
+		facteurOmbrage = 0.2;
+	}
     return (facteurOmbrage);
 }
 
@@ -173,7 +175,7 @@ void main (void)
     // Car on ne fait plus aucun calculs dans le NS !
 
     // échantilloner la couleur du gazon dans la texture colorMap
-    color = texture2D(colorMap, gl_TexCoord[0].xy);
+    color = texture(colorMap, gl_TexCoord[0].xy);
     color *= flight(fragNormal);
 
     // modulation finale de la couleur avec du brouillard
@@ -189,15 +191,15 @@ void main (void)
     if(shadowMapOn == 1)
     {
 	// Additionner l'effet des 3 ombres
-	if (pointLightOn == 1) {
-	    color *= calculerOmbrage(shadowMap1, ShadowCoordLight0);;
-	}
-	if (dirLightOn == 1) {
-	    color *= calculerOmbrage(shadowMap2, ShadowCoordLight1);;
-	}
-	if (spotLightOn == 1) {
-	    color *= calculerOmbrage(shadowMap3, ShadowCoordLight2);;
-	}
+		if (pointLightOn == 1) {
+			color *= calculerOmbrage(shadowMap1, ShadowCoordLight0);;
+		}
+		if (dirLightOn == 1) {
+			color *= calculerOmbrage(shadowMap2, ShadowCoordLight1);;
+		}
+		if (spotLightOn == 1) {
+			color *= calculerOmbrage(shadowMap3, ShadowCoordLight2);;
+		}
     }
 
     // couleur finale du gazon

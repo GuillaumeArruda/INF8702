@@ -100,6 +100,7 @@ int main(int argc,char *argv[])
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     // taille de la fenetre
     glutInitWindowSize(CVar::currentW, CVar::currentH);
+    
     // creation de la fenetre
     CVar::g_nWindowID = glutCreateWindow("Projet nuanceur");
 
@@ -903,17 +904,15 @@ void construireCartesOmbrage()
 		// Ajustement de l'environnement correct pour lumière en cours
 		// à ajuster correctement : GL_MODELVIEW et GL_PROJECTION
 		glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
 		glLoadIdentity();
-		gluPerspective(60.0, (GLfloat)CVar::currentW / (GLfloat)CVar::currentH, 0.1, 2000.0);
-
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluLookAt(pos[0], pos[1], pos[2], 0, 0, 0, 0, 1, 0);
-
+        gluPerspective(60, (GLdouble)CCst::largeurShadowMap / (GLdouble)CCst::hauteurShadowMap, 0.1, 1000);
+ 
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+        glLoadIdentity();
+        gluLookAt(pos[0], pos[1], pos[2], 0, 0, 0, 0, 1, 0);
 		// Ajout d'un polygon offset pour obtenir un meilleur résultat (faccultatif)
-		// ...
-
 
 		// ne pas oublier d'effacer les bits de couleur et de profondeur
 		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -931,21 +930,14 @@ void construireCartesOmbrage()
 
 		// remettre les matrices GL_MODELVIEW ET GL_PROJECTION
 		// qui étaient là avant...
-
-		float* depthBuffer = new float[shadowMaps[i]->GetWidth() * shadowMaps[i]->GetHeight()];
-		glReadBuffer(GL_FRONT);
-		glReadPixels(0, 0, shadowMaps[i]->GetWidth(), shadowMaps[i]->GetHeight(), GL_DEPTH_COMPONENT, GL_FLOAT, depthBuffer);
-
-		for (int j = 0; i < shadowMaps[i]->GetWidth() * shadowMaps[i]->GetHeight(); ++j)
-		{
-			if (depthBuffer[j] != 1.0f)
-			{
-				cout << j << endl;
-			}
-		}
-	    // terminer la définition du FBO correspondant
+        glPopMatrix();
+        glMatrixMode(GL_PROJECTION);
+        glPopMatrix();
+        glMatrixMode(GL_MODELVIEW);
+	    
+        // terminer la définition du FBO correspondant
         shadowMaps[i]->TerminerCapture();
-        
+
 	    // "Popper" le viewport
         glPopAttrib();
     }
@@ -1003,16 +995,15 @@ void construireMatricesProjectivesEclairage()
     glTranslatef(-150.0, -30.0, 14.2);
     glScalef(CCst::largeurGazon, CCst::longueurGazon, CCst::hauteurGazon);
     glTranslatef(-3.5f, -1.5f, 0.0);
-    glGetFloatv(GL_MODELVIEW, gazonModelMatrix);
+    glGetFloatv(GL_MODELVIEW_MATRIX, gazonModelMatrix);
 
 	// réconstruire/récupérer la matrice VIEW de la lumière
 	// ...
 	// ...
 	// ... la sauvegarder dans "lightViewMatrix"
     glLoadIdentity();
-    gluLookAt(pos[0], pos[1], pos[2], 0, 0, 0, 0, 1, 0);
-
-    glGetFloatv(GL_MODELVIEW, lightViewMatrix);
+    gluLookAt(pos[0], pos[1], pos[2], 0, 0, 0, 0, 1, 1);
+    glGetFloatv(GL_MODELVIEW_MATRIX, lightViewMatrix);
 
 
 
@@ -1023,22 +1014,22 @@ void construireMatricesProjectivesEclairage()
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    gluPerspective(60.0, (GLfloat)CVar::currentW / (GLfloat)CVar::currentH, 0.1, 2000.0);
-    glGetFloatv(GL_PROJECTION, lightProjectionMatrix);
+    gluPerspective(60, (GLdouble)CCst::largeurShadowMap/(GLdouble)CCst::hauteurShadowMap,0.1, 1000);
+    glGetFloatv(GL_PROJECTION_MATRIX, lightProjectionMatrix);
 	
     // Construire la matrice de TEXTURE à passer au nuanceur
 	// et Changer la texture active en fonction de la lumière considérée
-	glMatrixMode( GL_TEXTURE );
-	glActiveTexture(CCst::unitesTextures[i+1]);
-    glLoadIdentity();
-	// construire/calculer la matrice projective d'éclairage
-	// ...
-	// ...
-	// ...
-	// ...
-    glMultMatrixf(gazonModelMatrix);
-    glMultMatrixf(lightViewMatrix);
+    glActiveTexture(CCst::unitesTextures[i + 1]);
+    glMatrixMode( GL_TEXTURE );
+
+	
+    // construire/calculer la matrice projective d'éclairage
+    glLoadMatrixf(scaleAndBiasMatrix);
     glMultMatrixf(lightProjectionMatrix);
+    glMultMatrixf(lightViewMatrix);
+    glMultMatrixf(gazonModelMatrix);
+
+    glGetFloatv(GL_TEXTURE_MATRIX,gazonModelMatrix);
 
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();

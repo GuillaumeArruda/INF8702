@@ -1,3 +1,4 @@
+
 uniform int pointLightOn;
 uniform int dirLightOn;
 uniform int spotLightOn;
@@ -15,7 +16,6 @@ varying vec3 fragNormal;
 varying vec3 fragLight0Vect;
 varying vec3 fragLight1Vect;
 varying vec3 fragLight2Vect;
-
 
 vec3 fnormal(void)
 {
@@ -48,8 +48,8 @@ vec4 calculerCoordProjectives(in int IDTextureMatrix)
     // à l'aide de la matrice projective indiquée en argument. Mettre
     // le résultat dans shadowCoordLight qui sera retourné et lancé vers
     // le nuanceur de fragments.
-	shadowCoordLight = gl_TextureMatrix[IDTextureMatrix] * gl_Vertex;
-    return (shadowCoordLight);
+	shadowCoordLight = gl_TextureMatrix[IDTextureMatrix] * vec4(gl_Vertex.xyz,1);
+    return shadowCoordLight;
 }
 
 
